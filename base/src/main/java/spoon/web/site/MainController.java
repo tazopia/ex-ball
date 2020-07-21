@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import spoon.customer.service.PopupService;
+import spoon.gameZone.power.service.PowerService;
 import spoon.mapper.BoardMapper;
 import spoon.mapper.GameMapper;
 
@@ -23,10 +24,13 @@ public class MainController {
 
     private PopupService popupService;
 
+    private PowerService powerService;
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String main(ModelMap map, SitePreference preference) {
         if (!preference.isMobile()) {
             map.addAttribute("gameList", gameMapper.mainList());
+            map.addAttribute("powerball", powerService.getClosing().getContent());
             map.addAttribute("noticeList", boardMapper.mainNotice());
             map.addAttribute("eventList", boardMapper.mainEvent());
         }

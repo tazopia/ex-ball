@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -230,5 +231,11 @@ public class PowerServiceImpl implements PowerService {
         gameConfig.setPb_oe_ou(config.isPb_oe_ou());
 
         return gameConfig;
+    }
+
+    @Override
+    public Page<Power> getClosing() {
+        PageRequest pageRequest = new PageRequest(1, 8, new Sort(Sort.Direction.DESC, "sdate"));
+        return powerRepository.findAll(new BooleanBuilder(q.closing.isTrue()), pageRequest);
     }
 }

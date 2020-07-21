@@ -7,15 +7,13 @@
 	<img th:if="${sysConfig.event.lottoEnabled}" src="/images/lotto.png" id="lotto" />
     <figure>
         <div class="container">
-            <!--<h1>-->
-                <!--<p>IF IT DOESN'T CHALLENGE YOU,</p>-->
-                <!--<p>IT DOESN'T CHANGE YOU</p>-->
-            <!--</h1>-->
+			<video autoplay muted loop src="/images/video_bg.mp4"></video>
+			<div class="video-bg"></div>
         </div>
     </figure>
     <div class="content container">
         <section class="main-wrap">
-            <article class="game">
+            <article class="game" th:if="false">
                 <h3><span th:text="${siteConfig.companyName}">Soul</span> 최근 경기 목록</h3>
                 <ul>
                     <li th:each="list : ${gameList}">
@@ -26,6 +24,18 @@
                     </li>
                 </ul>
             </article>
+			<article class="powerball">
+				<h3><span th:text="${siteConfig.companyName}">Soul</span> 파워볼 결과</h3>
+				<ul>
+					<li th:each="list : ${powerball}">
+						<span class="date" th:utext="${tag.dateWeek(list.gameDate)}">03.12(월) 23:00</span>
+						<span class="times" th:text="${tag.num(list.times)} + ' 회'"></span>
+						<span class="round" th:text="${list.round} + ' 회차'"></span>
+						<span class="balls" th:text="${list.ball}">VS</span>
+						<span class="pb" th:text="${list.pb}">VS</span>
+					</li>
+				</ul>
+			</article>
             <article class="event">
                 <h3><span th:text="${siteConfig.companyName}">Soul</span> 이벤트</h3>
                 <ul>

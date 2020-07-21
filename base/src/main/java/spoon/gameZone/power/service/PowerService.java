@@ -8,6 +8,8 @@ import spoon.gameZone.power.PowerConfig;
 import spoon.gameZone.power.PowerDto;
 import spoon.support.web.AjaxResult;
 
+import java.util.List;
+
 public interface PowerService {
 
     /**
@@ -45,4 +47,5 @@ public interface PowerService {
      */
     PowerDto.Config gameConfig();
 
+    Page<Power> getClosing();
 }

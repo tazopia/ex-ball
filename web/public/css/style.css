@@ -461,6 +461,7 @@ main .main-wrap {
   -webkit-box-shadow: inset 20px 20px 60px 2px rgba(0,0,0,0.4);
   box-shadow: inset 20px 20px 60px 2px rgba(0,0,0,0.4);
   padding: 40px 20px;
+  min-height: 300px;
 }
 main .main-wrap h3,
 main .main-wrap h4 {
@@ -515,6 +516,25 @@ main .main-wrap article li a {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+main .main-wrap .powerball {
+  width: 46%;
+}
+main .main-wrap .powerball .date {
+  width: 136px;
+}
+main .main-wrap .powerball .times {
+  width: 120px;
+}
+main .main-wrap .powerball .round {
+  width: 90px;
+}
+main .main-wrap .powerball .balls {
+  width: 170px;
+}
+main .main-wrap .powerball .pb {
+  color: #ffd424;
+  font-weight: 800;
+}
 main .main-wrap .game {
   width: 46%;
 }
@@ -529,8 +549,17 @@ main figure {
   height: 500px;
   width: 1280px;
   margin: 0 auto 10px auto;
-  background: url("/images/main_visual.jpg") right top no-repeat;
   z-index: -1;
+}
+main figure video {
+  object-fit: contain;
+}
+main figure .video-bg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/images/patten_login_bg.png");
 }
 main figure h1 {
   padding: 140px 0 0 60px;

@@ -348,6 +348,7 @@ main {
 		background #000
 		box-shadow(inset 20px 20px 60px 2px rgba(0,0,0,0.4))
 		padding 40px 20px
+		min-height 300px
 
 		h3, h4 {
 			height 24px
@@ -408,6 +409,32 @@ main {
 			}
 		}
 
+		.powerball {
+			width 46%
+
+			.date {
+				width 136px
+			}
+
+			.times {
+				width 120px
+			}
+
+			.round {
+				width 90px
+			}
+
+			.balls {
+				width 170px
+			}
+
+			.pb {
+				color #ffd424
+				font-weight 800
+			}
+
+		}
+
 		.game {
 			width 46%
 		}
@@ -427,8 +454,21 @@ main {
 		height 500px
 		width 1280px
 		margin 0 auto 10px auto
-		background url(/images/main_visual.jpg) right top no-repeat
+		//background url(/images/main_visual.jpg) right top no-repeat
 		z-index -1
+
+
+		video {
+			object-fit contain
+		}
+
+		.video-bg {
+			position absolute
+			top 0
+			width 100%
+			height 100%
+			background url(/images/patten_login_bg.png)
+		}
 
 		h1 {
 			padding 140px 0 0 60px
