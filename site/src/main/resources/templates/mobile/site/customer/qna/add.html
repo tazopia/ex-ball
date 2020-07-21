@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="layout/mobileLayout" th:with="main='page', gnb='customer', lnb='qna', title='고객상담'">
+<body>
+
+<main class="page" layout:fragment="page">
+
+    <form id="frm" method="post" th:object="${add}" onsubmit="return add()">
+        <div class="add" style="padding-top:20px">
+            <input type="text" th:field="*{title}" placeholder="제목"/>
+            <textarea th:field="*{contents}" placeholder="문의"></textarea>
+        </div>
+
+        <div class="command">
+            <button class="btn-big btn02">문의하기</button>
+            <a th:href="|${siteConfig.pathSite}/customer/qna|" class="btn-big">돌아가기</a>
+        </div>
+    </form>
+</main>
+<script layout:fragment="script" th:if="true">
+    function add() {
+        if ($('#title').val() === '') {
+            alert('제목을 입력 하세요.')
+            $('#title').focus();
+            return false;
+        }
+        if ($('#contents').val() === '') {
+            alert('내용을 입력 하세요.')
+            $('#contents').focus();
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

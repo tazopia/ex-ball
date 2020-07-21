@@ -1,0 +1,511 @@
+html, body {
+	height 100%
+}
+
+body {
+	height calc(100% - 126px)
+	color #ddd
+	//background #464547
+	background #0b0c0e
+	font-size 13px
+	font-family 'NanumGothic', 'Nanum Gothic', 'AppleSDGothicNeo', 'Malgun Gothic'
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+img {
+	vertical-align middle
+}
+
+.container {
+	position relative
+	//overflow hidden
+	width 1280px
+	margin 0 auto
+}
+
+
+
+.background {
+	position fixed
+	left 0
+	right 0
+	top 0
+	bottom 0
+	//background-image url(/images/bg01.jpg)
+	background url(/images/background.jpg) center center no-repeat
+	background-size cover
+	filter blur(10px)
+}
+
+a, button {
+	color #ccc
+	text-decoration none
+	transition(all 0.2s ease-out)
+
+	&:hover {
+		color #fff
+	}
+}
+
+@keyframes MOVE-BG {
+	50% {
+		background-position: right bottom;
+	}
+}
+
+header {
+	position fixed
+	width 100%
+	z-index 9
+	top 0
+	box-shadow(0 0 10px 4px rgba(0, 0, 0, 0.6))
+	background url(/images/top-bg.jpg) left top no-repeat
+	background-size cover
+	animation(MOVE-BG 20s infinite)
+
+	nav {
+		height 50px
+		background transparent
+	}
+
+	.gnb {
+		background #000
+		overflow hidden
+		height 40px
+		line-height 40px
+
+		.title {
+			position absolute
+			left 0
+			top 0
+			text-align center
+			width 167px
+			height 40px
+			z-index 2
+			background transparent
+		}
+
+		#rolling-wrap {
+			float right
+			width 1160px
+			height 40px
+			line-height 40px
+			position relative
+			overflow hidden
+
+			p {
+				position absolute
+				left 1160px
+				overflow hidden
+				white-space nowrap
+			}
+		}
+	}
+
+	.info {
+		height 36px
+		line-height 36px
+		background #262527
+
+		.right {
+			float right
+		}
+
+		.userid {
+			color #51b2dc
+			font-weight 600
+		}
+
+		.logout {
+			display inline-block
+			background #565658
+			height 24px
+			line-height 24px
+			padding 0 10px
+			margin-left 40px
+			color #fff
+
+			&:hover {
+				background #dd4400
+			}
+		}
+
+		.qna {
+			margin-left 40px
+			background url(/images/icon_qna.png) left center no-repeat
+			padding-left 24px
+
+			em {
+				color #51b2dc
+			}
+		}
+
+		.memo {
+			margin-left 40px
+			background url(/images/icon_memo.png) left center no-repeat
+			padding-left 22px
+
+			em {
+				color #51b2dc
+			}
+		}
+
+		.money {
+			background url(/images/icon_money.png) left center no-repeat
+			padding-left 18px
+
+			em {
+				color #ee5f5b
+			}
+		}
+
+		.point {
+			margin-left 40px
+			background url(/images/icon_point.png) left center no-repeat
+			padding-left 18px
+
+			em {
+				color #ee5f5b
+			}
+		}
+
+		.exchange {
+			display inline-block
+			background #565658
+			height 24px
+			line-height 24px
+			padding 0 10px
+			margin-left 20px
+			color #fff
+
+			&:hover {
+				background #0066aa
+			}
+		}
+	}
+
+	.logo {
+		width 195px
+		height 130px
+		margin-top -70px
+		float left
+		position relative
+		z-index 2
+
+		img {
+			position absolute
+			top 30px
+			left 20px
+			bottom 0
+			margin auto
+		}
+	}
+
+	.nav {
+		float right
+		height 50px
+
+		li {
+			float left
+			position relative
+			display block
+
+			ul.sub {
+				display none
+				padding-top 10px
+				background #464547
+				//background url(/images/top-bg.jpg) center center no-repeat
+				position absolute
+				width 100%
+				left -10px
+				min-width 120px
+				z-index 2
+				box-shadow(2px 2px 10px rgba(0,0,0,0.6))
+
+				li {
+					float none
+					border-bottom solid 1px #363537
+
+					a {
+						padding 0
+						text-align center
+						font-size 14px
+						font-weight normal
+						border none
+						height 32px
+						line-height 32px
+						color #fff
+					}
+				}
+			}
+
+			a {
+				display block
+				padding 0 14px
+				height 50px
+				line-height 50px
+				font-size 16px
+				font-weight 600
+				border-bottom solid 2px transparent
+				color #ccc
+			}
+
+			&.on, &.on:hover {
+				> a {
+					background rgba(0, 0, 0, 0.1)
+					color #fff
+					border-bottom-color #075daa
+				}
+			}
+
+			&:hover {
+				> a {
+					text-shadow 1px 1px 2px rgba(0, 0, 0, 0.4)
+					background rgba(0, 0, 0, 0.2)
+					color #fff
+					border-bottom-color #727272
+				}
+
+				ul.sub {
+					display block
+				}
+			}
+
+			&.gnb-btn {
+				a {
+					color #fff
+					border solid 1px rgba(255, 255, 255, 0.3)
+					margin 12px 0 0 6px
+					padding 0 30px
+					border-radius 5px
+					height 26px
+					line-height 24px
+					text-shadow 1px 1px 1px rgba(0, 0, 0, 0.5)
+					font-size 14px
+					color #fff
+
+					&.gnb-deposit {
+						margin-left 60px
+						background #63a001
+
+						&:hover {
+							background darken(#63a001, 16%)
+						}
+					}
+
+					&.gnb-withdraw {
+						background #dc0405
+
+						&:hover {
+							background darken(#dc0405, 16%)
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+main {
+	min-height 100%
+	position relative
+	margin-top 126px
+	padding-bottom 100px
+
+	.content {
+		position relative
+		height 100%
+	}
+
+	&.main {
+		#lotto {
+			position absolute
+			left 50%
+			margin-left -640px
+		}
+
+		.content {
+			//margin-top -63px
+		}
+	}
+
+	&.page {
+		figure {
+			//display none
+			position absolute
+			width 100%
+			height 600px
+			z-index 0
+		}
+	}
+
+	.main-wrap {
+		overflow hidden
+		background url(/images/main-bg2.png) no-repeat
+		background #000
+		box-shadow(inset 20px 20px 60px 2px rgba(0,0,0,0.4))
+		padding 40px 20px
+
+		h3, h4 {
+			height 24px
+			color #fff
+			font-size 16px
+			margin-bottom 20px
+			border-bottom solid 1px #727272
+
+			span {
+				color #51b2dc
+			}
+		}
+
+		article {
+			float left
+			padding 0 15px
+			font-size 14px
+
+			li {
+				overflow hidden
+				span {
+					display block
+					height 35px
+					line-height 35px
+					float left
+
+					&.date {
+						width 24%
+						em {
+							color #fff
+						}
+					}
+
+					&.home, &.away {
+						width 33%
+						color #fff
+					}
+
+					&.away {
+						text-align right
+					}
+
+					&.vs {
+						width 10%
+						text-align center
+					}
+				}
+
+				a {
+					width 100%
+					display block
+					height 35px
+					line-height 35px
+					overflow hidden
+					white-space nowrap
+					text-overflow ellipsis
+				}
+			}
+		}
+
+		.game {
+			width 46%
+		}
+
+		.event {
+			width 27%
+		}
+
+		.notice {
+			width 27%
+		}
+
+	}
+
+	figure {
+		display block
+		height 500px
+		width 1280px
+		margin 0 auto 10px auto
+		background url(/images/main_visual.jpg) right top no-repeat
+		z-index -1
+
+		h1 {
+			padding 140px 0 0 60px
+			font-family 'Source Sans Pro', sans-serif
+			font-size 46px
+			font-weight 600
+			color #fff
+			line-height 1.05
+		}
+
+		p {
+			display table
+			padding 4px 20px
+			//background rgba(255, 255, 255, 0.3)
+			margin-bottom 4px
+			transition(all 0.2s ease-out)
+
+			&:hover {
+				letter-spacing 1px
+			}
+		}
+	}
+}
+
+footer {
+	z-index 1
+	position relative
+	background #000
+	height 120px
+	margin-top -120px
+	border-top solid 1px rgba(255,255,255,0.1)
+
+	.copyright {
+		position relative
+		margin-top 20px
+		text-align center
+		color #aaa
+
+		span {
+			color #ddd
+		}
+
+		.btn {
+			float right
+		}
+	}
+}
+
+#clock {
+	margin-top 4px
+	width 220px
+}
+
+#btn-top {
+	cursor pointer
+	position fixed
+	margin-left 50%
+	left 670px
+	bottom 30px
+	width 50px
+	height 50px
+	line-height 50px
+	border-radius 25px
+	background #565658
+	border solid 1px rgba(255, 255, 255, 0.1)
+	text-align center
+	text-shadow -1px -1px 1px rgba(0, 0, 0, 0.6)
+	box-shadow(1px 1px 10px rgba(0, 0, 0, 0.6))
+	transition(all 0.5s ease-out)
+	opacity 0
+	font-weight 600
+
+	&:hover {
+		background btn-info
+	}
+
+	&.show {
+		opacity 1
+	}
+}

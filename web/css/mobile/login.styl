@@ -1,0 +1,172 @@
+@media screen and (orientation:landscape) {
+	#login {
+		.login-wrap {
+			padding-top 40px !important
+		}
+	}
+
+	#layout-box {
+		top 50px !important
+		margin-top 0 !important
+	}
+}
+
+#login #particles-js {
+	position fixed
+	left 0
+	right 0
+	top 0
+	bottom 0
+	width 100%
+	height 100%
+	-o-object-fit cover
+	-ms-object-fit cover
+	object-fit cover
+	z-index -1
+	background url(/images/background.jpg) center center no-repeat
+	background-size cover
+	opacity 1
+}
+
+#login {
+	#login-bg {
+		position fixed
+		left 0
+		right 0
+		top 0
+		bottom 0
+		width 100%
+		height 100%
+		-o-object-fit cover
+		-ms-object-fit cover
+		object-fit cover
+		z-index 0
+		//opacity 0.5
+	}
+
+
+	#login-bg {
+		div {
+			position absolute
+			left 0
+			top 0
+			width 100%
+			height 100%
+			background url(/images/bg01.jpg) center center no-repeat
+			-webkit-background-size cover
+			-moz-background-size cover
+			-o-background-size cover
+			background-size cover
+			opacity 1
+
+			&.bg2 {
+				background-image url(/images/bg02.jpg)
+			}
+
+			&.bg3 {
+				background-image url(/images/bg03.jpg)
+			}
+		}
+	}
+
+
+	.login-wrap {
+		min-height 100%
+		width 100%
+		padding 10% 20px 40px 20px
+		display flex
+
+
+		.login-box {
+			width 100%
+			justify-self center
+			align-self center
+		}
+
+		&.login-join {
+			padding-top 40px
+		}
+	}
+
+	.command {
+		background none
+	}
+
+	h1 {
+		font-size 50px
+		font-weight 800
+		margin-bottom 20px
+		color #fff
+		text-align center
+	}
+
+	div {
+		position relative
+
+		p {
+			font-size 12.5px
+			padding-bottom 10px
+			line-height 1.4
+		}
+
+		.bul {
+			position absolute
+			right 10px
+			top 2px
+			display inline-block
+			width 20px
+			height 20px
+			background url(/images/btn_join.png) center left no-repeat
+
+			&.bul-ready {
+				background-position -20px 0
+			}
+
+			&.bul-error {
+				background-position -40px 0
+			}
+		}
+	}
+
+	.command {
+		margin-top 20px
+	}
+
+	.btn-login {
+		background url(/images/btn-bg.jpg) center top no-repeat //#59a735
+		transition(all 0.5s ease-out)
+		&:active {
+			//background-color darken(#59a735, 50%)
+			background-position-y bottom
+			color #000
+		}
+	}
+
+	.btn-join {
+		border 1px solid #aaa
+		color #fff
+		background none
+	}
+
+	.copyright {
+		text-align center
+		margin-top 40px
+		font-size 11px
+		color #ccc
+
+		span {
+			color #fff
+		}
+	}
+}
+
+.spinner {
+
+}
+
+.loading {
+	width 100px
+	height 100px
+	background url(/images/m/loading.png) center center no-repeat
+	animation(sk-span 2s infinite linear)
+}

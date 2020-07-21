@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="layout/adminLayout" th:with="gnb='seller', lnb='share'">
+<head></head>
+<body>
+<h2 layout:fragment="title">
+    <small>총판 :</small>
+    총판 지급율 관리
+</h2>
+<div layout:fragment="content">
+    <section>
+        <div class="panel-header">
+            <h3>
+                <i class="bul fa fa-user"></i>
+                총판 지급율 관리
+            </h3>
+        </div>
+        <table class="table-list">
+            <caption>총판 지급율 관리</caption>
+            <thead>
+            <tr>
+                <th>총판</th>
+                <th>대리점</th>
+                <th>가입회원</th>
+                <th>정상회원</th>
+                <th>입금</th>
+                <th>출금</th>
+                <th>수익</th>
+                <th>스포츠</th>
+                <th>실시간</th>
+                <th>정산방식</th>
+                <th>수익(%)</th>
+                <th>스포츠(%)</th>
+                <th>실시간(%)</th>
+                <th style="width: 140px;">관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${list}" th:class="${m.role.name() eq 'AGENCY2'} ? 'on'" th:with="isHQ = ${m.role.name() eq 'AGENCY2'}">
+                <td th:class="${isHQ} ? 'popup'" th:text="${isHQ ? m.agency2 : '-'}" th:onclick="${isHQ} ? |popup.member.info('${m.userid}');|">총판</td>
+                <td th:class="${!isHQ} ? 'popup'" th:text="${!isHQ ? m.agency1 : '-'}" th:onclick="${!isHQ} ? |popup.member.info('${m.userid}');|">대리점</td>
+                <td class="color01 num" th:text="${tag.num(m.regMember)}">가입회원</td>
+                <td class="color01 num" th:text="${tag.num(m.joinMember)}">정상회원</td>
+                <td class="color04 num" th:text="${tag.num(m.inMoney) + '원'}">입금</td>
+                <td class="color03 num" th:text="${tag.num(m.outMoney) + '원'}">출금</td>
+                <td class="color02 num" th:text="${tag.num(m.inMoney - m.outMoney) + '원'}">수익</td>
+                <td class="color04 num" th:text="${tag.num(m.betSports) + '원'}">스포츠</td>
+                <td class="color03 num" th:text="${tag.num(m.betZone) + '원'}">실시간</td>
+                <td>
+                    <select name="rateCode" th:if="${isHQ}">
+                        <option value="">선택하세요</option>
+                        <option value="수익분배" th:selected="${m.rateCode eq '수익분배'}">수익분배</option>
+                        <option value="롤링분배" th:selected="${m.rateCode eq '롤링분배'}">롤링분배</option>
+                    </select>
+                </td>
+                <td>
+                    <label th:if="${isHQ}" th:remove="tag">
+                        <input type="text" name="rateShare" th:value="${m.rateShare}" style="width: 60px; text-align: right;"/>%
+                    </label>
+                    <span th:if="${!isHQ}" th:remove="tag" th:text="${m.rateShare + '%'}"></span>
+                </td>
+                <td>
+                    <label th:if="${isHQ}" th:remove="tag">
+                        <input type="text" name="rateSports" th:value="${m.rateSports}" style="width: 60px; text-align: right;"/>%
+                    </label>
+                    <span th:if="${!isHQ}" th:remove="tag" th:text="${m.rateSports + '%'}"></span>
+                </td>
+                <td>
+                    <label th:if="${isHQ}" th:remove="tag">
+                        <input type="text" name="rateZone" th:value="${m.rateZone}" style="width: 60px; text-align: right;"/>%
+                    </label>
+                    <span th:if="${!isHQ}" th:remove="tag" th:text="${m.rateZone + '%'}"></span>
+                </td>
+                <td>
+                    <a class="btn btn01" th:if="${isHQ}" th:onclick="|updateShare('${m.userid}', this);|" style="width: 100px;">지급율수정 >></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="panel-footer">
+
+        </div>
+    </section>
+</div>
+<script layout:fragment="script" th:if="true">
+
+    function updateShare(userid, obj) {
+        if (!confirm('총판 지급율을 수정하시겠습니까?')) {
+            return;
+        }
+
+        var tr = $(obj).parent().parent();
+
+        $.post(path + '/seller/share', {
+            userid: userid,
+            rateCode: tr.find('select').val(),
+            rateShare: tr.find('input[name=rateShare]').val(),
+            rateSports: tr.find('input[name=rateSports]').val(),
+            rateZone: tr.find('input[name=rateZone]').val()
+        }).done(function () {
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
+        });
+    }
+
+</script>
+</body>
+</html>

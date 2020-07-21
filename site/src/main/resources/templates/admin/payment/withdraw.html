@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="layout/adminLayout" th:with="gnb='payment', lnb='withdraw', pnb=${command.closing}">
+<head></head>
+<body>
+<h2 layout:fragment="title">
+    <small>충/환전 :</small>
+    환전
+</h2>
+<div layout:fragment="content">
+    <section>
+        <div class="panel-search">
+            <form id="frm-search" th:object="${command}" th:action="@{|${action}|}" method="get">
+                <input type="hidden" name="page" id="page" th:value="${page.number + 1}"/>
+
+                <label>
+                    <span>환전 신청일 :</span>
+                    <input type="text" th:field="*{date}" class="cal">
+                    <a href="#" id="sp-reset-date" class="btn btn-cal">지움</a>
+                </label>
+                <label>
+                    아이디/닉네임 :
+                    <input type="text" th:field="*{username}"/>
+                    (일치 <input type="checkbox" th:field="*{match}" />)
+                </label>
+                <label>
+                    입금자 :
+                    <input type="text" th:field="*{depositor}"/>
+                </label>
+                <div class="command">
+                    <a class="btn btn01" onclick="goSearch();">검색</a>
+                    <a th:href="@{|${action}|}" class="btn">취소</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section>
+        <div class="panel-header">
+            <h3>
+                <i th:class="${icon}"></i>
+                <span th:text="${command.closing} ? '환전완료' : '환전신청'">충전신청</span>
+                <span class="total">( 검색된 회원수 : <span th:text="${page.totalElements}">100</span> 명 )</span>
+            </h3>
+        </div>
+        <table class="table-list">
+            <caption>종목 설정</caption>
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col style="width: 24px;">
+                <col style="width: 24px;">
+                <col style="width: 24px;">
+                <col style="width: 24px;">
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col th:style="${command.closing} ? 'width: 80px;' : 'width: 220px;'">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>아이디</th>
+                <th>닉네임</th>
+                <th>레벨</th>
+                <th colspan="4">회원정보</th>
+                <th>머니</th>
+                <th>포인트</th>
+                <th>IP</th>
+                <th>신청시간</th>
+                <th th:text="${command.closing} ? '마감시간' : '경과시간'">경과시간</th>
+                <th>은행</th>
+                <th>계좌번호</th>
+                <th>예금주</th>
+                <th>출금액</th>
+                <th>금액</th>
+                <th>출금확인</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="b,num : ${page.content}" th:with="total=${page.totalElements - page.number * page.size + 1}" th:remove="tag">
+                <tr th:id="${b.id}">
+                    <td rowspan="2" th:text="${total - num.count}">1</td>
+                    <td class="popup color03" th:onclick="|popup.member.info('${b.userid}');|" th:text="${b.userid}">아이디</td>
+                    <td class="popup color02" th:onclick="|popup.member.info('${b.userid}');|" th:text="${b.nickname}">닉네임</td>
+                    <td th:text="${b.level}">레벨</td>
+                    <td class="popup color04" th:onclick="|popup.payment.money('${b.userid}');|"><i class="bul fa fa fa-usd"></i></td>
+                    <td class="popup color04" th:onclick="|popup.payment.point('${b.userid}');|"><i class="bul fa fa-product-hunt"></i></td>
+                    <td class="popup color04" th:onclick="|popup.betting.list('${b.userid}');|"><i class="bul fa fa-shopping-cart"></i></td>
+                    <td class="popup color04" th:onclick="|popup.customer.memo('${b.userid}');|"><i class="bul fa fa-envelope-o"></i></td>
+                    <td class="color01 num" th:text="${tag.num(b.money)}">입금액</td>
+                    <td class="num color02" th:text="${tag.num(b.point)}">포인트</td>
+                    <td class="popup" th:onclick="|popup.member.login('${b.userid}');|" th:text="${b.ip}">아이피</td>
+                    <td th:utext="${tag.dayWeekTimes(b.regDate)}"></td>
+                    <td th:utext="${command.closing} ? ${tag.dayWeekTimes(b.closingDate)} : ${b.term}">경과시간</td>
+                    <td class="color02" th:text="${b.bank}">은행</td>
+                    <td class="color03" th:text="${b.account}">계좌번호</td>
+                    <td class="color04" th:text="${b.depositor}">예금주</td>
+                    <td th:if="${b.amount < 500000}" class="color01 num" th:text="${tag.num(b.amount)}">입금액</td>
+                    <td th:if="${b.amount >= 500000 and b.amount < 1000000}" class="color03 num" th:text="${tag.num(b.amount)}">입금액</td>
+                    <td th:if="${b.amount >= 1000000}" class="color05 num" th:text="${tag.num(b.amount)}">입금액</td>
+                    <td class="color02" th:text="${b.korean + '원'}">금액</td>
+                    <td rowspan="2" class="command">
+                        <div th:if="${!command.closing}">
+                            <a class="btn btn03" th:onclick="|payment.withdraw.submit('${b.id}');|">환전완료</a>
+                            <a th:if="${b.role.name() eq 'USER'}" class="btn btn02" th:onclick="|payment.withdraw.rollback('${b.id}');|">취소</a>
+                            <a class="btn btn01" th:if="${b.alarm}" th:onclick="|payment.withdraw.stop('${b.id}');|">대기</a>
+                        </div>
+                        <div th:if="${command.closing && !b.cancel}">
+                            <span class="color02">환전완료</span>
+                        </div>
+                        <div th:if="${command.closing && b.cancel}">
+                            <span class="color03">환전취소</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:if="${b.role.name() eq 'USER'}" colspan="15">
+                        <label>마지막입금액 : <span class="color0" th:text="${tag.num(b.rolling.amount)}">1000</span>원</label>
+                        <label>머니 : <span class="color0" th:text="${tag.num(b.rolling.money)}">1000</span></label>
+                        <label>포인트 : <span class="color0" th:text="${tag.num(b.rolling.point)}">1000</span></label>
+                        <label>/</label>
+                        <label>
+                            스포츠 롤링 : <span class="color0" th:text="${tag.num(b.rolling.betSports)}"></span>
+                            (<span class="color03" th:text="${tag.num(b.rolling.rollingSports)}"></span>%)
+                        </label>
+                        <label>
+                            실시간 롤링 : <span class="color0" th:text="${tag.num(b.rolling.betZone)}"></span>
+                            (<span class="color03" th:text="${tag.num(b.rolling.rollingZone)}"></span>%)
+                        </label>
+                    </td>
+                    <td th:if="${b.role.name() ne 'USER'}" colspan="15">
+                        <span class="color01" th:text="${b.userid}"></span>
+                        <span class="color03" th:text="${b.role.name}"></span>
+                        출금 신청입니다.
+                    </td>
+                    <td colspan="2">
+                        <div th:if="${b.closing}">
+                            수수료 : <span class="color03" th:text="${b.fees}"></span>
+                        </div>
+                        <div th:if="${not b.closing}">
+                            수수료 : <input type="text" th:id="'fees' + ${b.id}" th:value="${b.fees}" style="text-align: right; width: 80px"/>
+                        </div>
+                    </td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+        <div class="panel-footer">
+            <div class="paging">
+                <ul th:replace="fragments/admin :: paging(p=${page})"></ul>
+            </div>
+        </div>
+    </section>
+</div>
+<script layout:fragment="script" th:if="true">
+
+</script>
+</body>
+</html>

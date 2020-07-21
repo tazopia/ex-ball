@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="layout/adminLayout" th:with="gnb='customer', lnb='qna'">
+<head></head>
+<body>
+<h2 layout:fragment="title">
+    <small>고객응대 :</small>
+    고객센터
+</h2>
+<div layout:fragment="content">
+    <section>
+        <form id="frm" th:object="${qna}" th:action="@{|${siteConfig.pathAdmin}/customer/qna/reply|}" method="post" onsubmit="return qnaReply();">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="panel-header">
+                <h3><i class="bul fa fa-desktop"></i> 고객센터 답변</h3>
+            </div>
+            <table class="table-read">
+                <caption>게시물 등록</caption>
+                <colgroup>
+                    <col style="width: 220px;">
+                    <col>
+                    <col style="width: 220px;">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th class="required">제목</th>
+                    <td colspan="3" th:text="${qna.title}"></td>
+                </tr>
+                <tr>
+                    <th class="required">작성자</th>
+                    <td class="popup" th:onclick="|popup.member.info('${qna.userid}');|">
+                        <em class="color03" th:text="${qna.userid}"></em>
+                        <span class="color02" th:text="${'(' + qna.nickname + ')'}"></span>
+                    </td>
+                    <th class="required">등급</th>
+                    <td>
+                        <em class="color03" th:text="${qna.role.name}"></em>
+                        <span class="color01" th:text="${'(Lv.' + qna.level + ')'}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="required">작성일</th>
+                    <td th:utext="${tag.fullDate(qna.regDate)}"></td>
+                    <th class="required">아이피</th>
+                    <td th:text="${qna.ip}"></td>
+                </tr>
+                <tr>
+                    <th class="required">회원정보</th>
+                    <td colspan="3">
+                        <em class="color04 cursor" th:onclick="|popup.payment.money('${qna.userid}');|"><i class="bul fa fa fa-usd"></i></em>
+                        <span class="color04 cursor" th:onclick="|popup.payment.point('${qna.userid}');|"><i class="bul fa fa-product-hunt"></i></span>
+                        <span class="color04 cursor" th:onclick="|popup.betting.list('${qna.userid}');|"><i class="bul fa fa-shopping-cart"></i></span>
+                        <span class="color04 cursor" th:onclick="|popup.customer.memo('${qna.userid}');|"><i class="bul fa fa-envelope-o"></i></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="required">질문</th>
+                    <td  colspan="3" class="contents" th:utext="${tag.onlyBr(qna.contents)}"></td>
+                </tr>
+                <tr>
+                    <th class="required">고객응대</th>
+                    <td  colspan="3" class="auto">
+                        <ul>
+                            <li th:each="a : ${auto}"><a href="#" th:onclick="|setReply(${a.key})|" th:text="${a.value.name}"></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="required">답변</th>
+                    <td  colspan="3" class="title">
+                        <input type="text" th:field="*{reTitle}" style="width: 100%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="required">내용</th>
+                    <td  colspan="3" class="title">
+                        <textarea th:field="*{reply}" style="width: 100%; height: 300px;"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="panel-footer">
+                <button class="btn btn04">답변</button>
+                <a onclick="qnaRemove();" class="btn btn02">삭제</a>
+                <a onclick="history.back();" class="btn">취소</a>
+            </div>
+        </form>
+    </section>
+</div>
+<script layout:fragment="script" th:if="true">
+    function setReply(id) {
+        $.ajax({
+            url: path + '/customer/qna/auto',
+            method: 'post',
+            data: {
+                id: id,
+                userid: '[[${qna.userid}]]',
+                nickname: '[[${qna.nickname}]]'
+            }
+        }).done(function (data) {
+            try {
+                $('#reTitle').val(data.title);
+                $('#reply').val(data.contents);
+            } catch (e) {
+
+            }
+        });
+    }
+
+    function qnaReply() {
+        if ($('#reTitle').val() === '') {
+            alert('답변을 입력 하세요.');
+            $('#reTitle').focus();
+            return false;
+        }
+        if ($('#reply').val() === '') {
+            alert('내용을 입력 하세요.');
+            $('#reply').focus();
+            return false;
+        }
+    }
+
+    function qnaRemove() {
+        if (!confirm('삭제를 하시면 되살릴 수 없습니다.\n\n삭제를 하시겠습니까?')) {
+            return false;
+        }
+        $('#frm').attr('action', path + '/customer/qna/delete').submit();
+    }
+</script>
+</body>
+</html>

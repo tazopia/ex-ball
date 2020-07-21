@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="layout/siteLayout" th:with="main='page', gnb='customer', lnb='qna'">
+<body>
+
+<section layout:fragment="section">
+    <h3>고객상담</h3>
+
+    <form id="frm" method="post" th:object="${add}" onsubmit="return add()">
+        <table>
+            <caption>고객센터</caption>
+            <colgroup>
+                <col style="width: 220px;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>제목</th>
+                <td><input type="text" th:field="*{title}" style="width: 96%;" /></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td><textarea th:field="*{contents}" style="width: 96%;height: 300px;"></textarea></td>
+            </tr>
+            </tbody>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="command right">
+            <button class="btn btn02">문의하기</button>
+            <a th:href="|${siteConfig.pathSite}/customer/qna|" class="btn">돌아가기</a>
+        </div>
+    </form>
+</section>
+<script layout:fragment="script" th:if="true">
+    function add() {
+        if ($('#title').val() === '') {
+            alert('제목을 입력 하세요.')
+            $('#title').focus();
+            return false;
+        }
+        if ($('#contents').val() === '') {
+            alert('내용을 입력 하세요.')
+            $('#contents').focus();
+            return false;
+        }
+
+    }
+</script>
+</body>
+</html>

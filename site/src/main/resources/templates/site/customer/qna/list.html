@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="layout/siteLayout" th:with="main='page', gnb='customer', lnb='qna'">
+<body>
+
+<section layout:fragment="section">
+    <h3>고객상담</h3>
+
+    <form id="frm-search" method="get" th:action="@{|${siteConfig.pathSite}/customer/qna|}">
+        <input type="hidden" id="page" name="page" th:value="${page.number + 1}"/>
+    </form>
+
+    <div class="board qna">
+        <ul class="head">
+            <li>No.</li>
+            <li>제목</li>
+            <li>작성일</li>
+            <li>답변</li>
+            <li>상태</li>
+        </ul>
+        <th:block th:each="q, num : ${page.content}" th:with="total=${page.totalElements - page.number * page.size + 1}">
+            <ul>
+                <li th:text="${total - num.count}">1</li>
+                <li class="ellipsis" th:onclick="|viewQna(${q.id});return false;|"><a class="ellipsis" th:text="${q.title}"></a></li>
+                <li th:utext="${tag.dayWeekTimes(q.regDate)}"></li>
+                <li th:class="${q.re} ? 'color01'" th:text="${q.re} ? '답변' : '대기'"></li>
+                <li th:class="${q.checked} ? 'checked' : 'color03 checked'" th:text="${q.checked} ? '확인' : '미확인'"></li>
+            </ul>
+            <ul th:id="${q.id}" class="contents">
+                <li>
+                    <h5 th:text="${q.title}">질문</h5>
+                    <p>
+                        <a href="#" th:onclick="|deleteQna(${q.id});return false;|" class="btn btn03">삭제</a>
+                        <span th:utext="${tag.onlyBr(q.contents)}" th:remove="tag"></span>
+                    </p>
+                    <h5 th:if="${q.re}" th:utext="${tag.colorBr(q.reTitle)}">답변</h5>
+                    <p th:if="${q.re}" th:utext="${tag.colorBr(q.reply)}"></p>
+                </li>
+            </ul>
+        </th:block>
+        <ul th:if="${page.numberOfElements eq 0}">
+            <li style="height: 300px;line-height: 300px;">등록된 문의가 없습니다.</li>
+        </ul>
+    </div>
+    <div class="command right">
+        <a th:href="|${siteConfig.pathSite}/customer/qna/add|" class="btn btn02">문의하기</a>
+    </div>
+    <div class="paging">
+        <ul th:replace="fragments/site :: paging(p=${page})"></ul>
+    </div>
+</section>
+
+<script layout:fragment="script" th:if="true">
+    function viewQna(id) {
+        if ($('#' + id).is(':visible')) {
+            $('#' + id).slideUp();
+        } else {
+            $('.contents').slideUp();
+            $('#' + id).slideDown();
+            showQna(id);
+        }
+    }
+
+    function showQna(id) {
+        $.post(path + '/customer/qna/view', {
+            id: id
+        }).done(function success(data) {
+            if (data.value === 'true') {
+                $('#' + id).prev().find('.checked').text('확인').removeClass('color03');
+            }
+        });
+    }
+
+    function deleteQna(id) {
+        $.post(path + '/customer/qna/delete', {
+            id: id
+        }).done(function (data) {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>
