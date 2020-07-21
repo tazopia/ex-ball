@@ -28,7 +28,7 @@
                 <a th:href="@{|${siteConfig.pathSite}/main|}"><img src="/images/main_logo.png" alt=""/></a>
             </div>
             <div class="nav">
-                <ul th:replace="fragments/siteFragment :: gnb">
+                <ul th:replace="fragments/sitePowerballFragment :: gnb">
                 </ul>
             </div>
         </div>
@@ -57,7 +57,7 @@
             <div id="clock"></div>
 			<img th:if="${sysConfig.event.lottoEnabled}" src="/images/lotto.png" id="lotto" style="margin-top: 4px;"/>
             <a href="#" onclick="payment.account();return false;"><img src="/images/aside01.png" style="margin-top: 4px;"/></a>
-            <img src="/images/kakao.png" style="margin-top: 6px;"/>
+<!--            <img src="/images/kakao.png" style="margin-top: 6px;"/>-->
 <!--			<a href="https://t.me/gp911" target="_blank"><img src="/images/tel.png" style="margin-top: 6px;"/></a>-->
         </aside>
         <aside id="game-cart" class="fixed" th:if="${main eq 'game'}">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <a href="#" onclick="payment.account();return false;"><img src="/images/aside01.png" style="margin-top: 4px;"/></a>
-                <img src="/images/kakao.png" style="margin-top: 6px;"/>
+<!--                <img src="/images/kakao.png" style="margin-top: 6px;"/>-->
 <!--				<a href="https://t.me/gp911" target="_blank"><img src="/images/tel.png" style="margin-top: 6px;"/></a>-->
             </div>
         </aside>
@@ -187,7 +187,7 @@
                     </div>
 					<img th:if="${sysConfig.event.lottoEnabled}" src="/images/lotto.png" id="lotto" style="margin-top: 4px;"/>
                     <a href="#" onclick="payment.account();return false;"><img src="/images/aside01.png" style="margin-top: 4px;"/></a>
-                    <img src="/images/kakao.png" style="margin-top: 6px;"/>
+<!--                    <img src="/images/kakao.png" style="margin-top: 6px;"/>-->
 <!--					<a href="https://t.me/gp911" target="_blank"><img src="/images/tel.png" style="margin-top: 6px;"/></a>-->
                 </div>
             </div>

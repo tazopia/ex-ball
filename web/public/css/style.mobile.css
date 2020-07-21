@@ -224,10 +224,11 @@ header {
   width: 100%;
   height: 50px;
   background-image: url("/images/top-bg.jpg");
-  background-position: left top;
-  -webkit-animation: MOVE-BG 20s infinite;
-  -o-animation: MOVE-BG 20s infinite;
-  animation: MOVE-BG 20s infinite;
+  background-size: cover;
+  background-position: center top;
+  -webkit-animation: MOVE-BG 30s infinite;
+  -o-animation: MOVE-BG 30s infinite;
+  animation: MOVE-BG 30s infinite;
   z-index: 10;
 }
 header #btn-menu,
@@ -315,7 +316,7 @@ footer.game {
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  background: url("/images/background.jpg") center center no-repeat;
+  background: url("/images/mobile_bg.jpg") center center no-repeat;
 }
 #gnb.on {
   left: 0;
@@ -437,14 +438,14 @@ footer.game {
 }
 #screen {
   z-index: -1;
-  opacity: 0.9;
+  opacity: 1;
   position: fixed !important;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background: url("/images/background.jpg") center center no-repeat #000;
-  filter: blur(10px);
+  background: url("/images/mobile_bg.jpg") center center no-repeat #000;
+  background-size: cover;
 }
 @-moz-keyframes MOVE-BG {
   50% {
@@ -524,14 +525,16 @@ textarea {
   -webkit-overflow-scrolling: touch;
 }
 .tab-menu .tab-menu-wrap,
-.tab-menu .tab-menu-wrap2 {
+.tab-menu .tab-menu-wrap2,
+.tab-menu .tab-menu-wrap3 {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   font-size: 0;
 }
 .tab-menu .tab-menu-wrap a,
-.tab-menu .tab-menu-wrap2 a {
+.tab-menu .tab-menu-wrap2 a,
+.tab-menu .tab-menu-wrap3 a {
   width: 20%;
   display: inline-block;
   height: 50px;
@@ -540,13 +543,17 @@ textarea {
   background: linear-gradient(to bottom, #414b4d, #11161a 100%);
 }
 .tab-menu .tab-menu-wrap a.on,
-.tab-menu .tab-menu-wrap2 a.on {
+.tab-menu .tab-menu-wrap2 a.on,
+.tab-menu .tab-menu-wrap3 a.on {
   background: #2a2f35;
   -webkit-box-shadow: inset 0 0 6px 2px rgba(0,0,0,0.8);
   box-shadow: inset 0 0 6px 2px rgba(0,0,0,0.8);
 }
 .tab-menu .tab-menu-wrap2 a {
   width: 50%;
+}
+.tab-menu .tab-menu-wrap3 a {
+  width: 33.33%;
 }
 .tab-menu2 {
   margin: 0 -6px;
@@ -654,7 +661,7 @@ ul.calendar li.th {
   -ms-object-fit: cover;
   object-fit: cover;
   z-index: -1;
-  background: url("/images/background.jpg") center center no-repeat;
+  background: url("/images/mobile_bg.jpg") center center no-repeat;
   background-size: cover;
   opacity: 1;
 }
@@ -710,7 +717,7 @@ ul.calendar li.th {
 #login h1 {
   font-size: 50px;
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: #fff;
   text-align: center;
 }
@@ -741,14 +748,13 @@ ul.calendar li.th {
   margin-top: 20px;
 }
 #login .btn-login {
-  background: url("/images/btn-bg.jpg") center top no-repeat;
+  background: #ee3729;
   -webkit-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 #login .btn-login:active {
-  background-position-y: bottom;
-  color: #000;
+  background-color: #81130a;
 }
 #login .btn-join {
   border: 1px solid #aaa;
@@ -780,7 +786,7 @@ ul.calendar li.th {
 .main-menu a {
   display: inline-block;
   position: relative;
-  margin: 8px 2px;
+  margin: 20px 2px;
   width: 80px;
   height: 80px;
 }
@@ -908,14 +914,13 @@ div.payment .btn {
   height: 40px;
   width: 200px;
   border-radius: 10px;
-  background: url("/images/btn-bg.jpg") center top no-repeat;
+  background: #ee3729;
   -webkit-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
 }
 div.payment .btn:active {
-  background-position-y: bottom;
-  color: #000;
+  background-color: #81130a;
 }
 .box {
   position: relative;
@@ -947,11 +952,9 @@ div.payment .btn:active {
   font-size: 18px;
   line-height: 38px;
   border-radius: 10px;
-  background: url("/images/btn-bg.jpg") center top no-repeat;
 }
 .box .btn.payment:hover {
-  background-position-y: bottom;
-  color: #000;
+  background-color: #2d541b;
 }
 .rule {
   padding: 20px 10px;
@@ -1549,13 +1552,12 @@ table.table-bet td.betInfo .btn-box {
   font-weight: normal;
 }
 #cart-wrap .cart-betting .btn-big.btn02 {
-  background: url("/images/btn-bg.png") center top no-repeat;
-  background-size: cover;
+  background: #ee3729;
   color: #fff;
   font-weight: 600;
 }
 #cart-wrap .cart-betting .btn-big.btn02:hover {
-  background-position-y: bottom;
+  background: #d91f11;
 }
 .ladder-result {
   background: url("/images/ladder-result.png");

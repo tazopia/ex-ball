@@ -22,28 +22,34 @@ public class PowerParsing implements GameBotParsing {
 
     private PowerBotService powerBotService;
 
-    private static boolean isClosing = false;
-
-    private static Date sdate = new Date();
+    private static String sdate = "";
 
     @Async
     @Override
     public void parsingGame() {
-        isClosing = false;
+        String json = HttpParsing.getJson(Config.getSysConfig().getZone().getPowerUrl());
+        if (json == null) {
+            return;
+        }
+        Power result = JsonUtils.toModel(json, Power.class);
+        if (result == null) {
+            return;
+        }
 
         int count = 0;
-        int times = ZoneConfig.getPower().getPowerMaker().getTimes();
+
         Calendar cal = Calendar.getInstance();
-        cal.setTime(ZoneConfig.getPower().getPowerMaker().getGameDate(times));
+        cal.setTime(result.getGameDate());
+        int times = result.getTimes();
+        int round = result.getRound();
 
         for (int i = 0; i < 6; i++) {
             times++;
+            round++;
             cal.add(Calendar.MINUTE, 5);
 
-            if (cal.getTime().before(sdate)) continue;
-
             if (powerBotService.notExist(cal.getTime())) {
-                Power power = new Power(times, cal.getTime());
+                Power power = new Power(round, times, cal.getTime());
                 power.setOdds(ZoneConfig.getPower().getOdds());
                 powerBotService.addGame(power);
                 count++;
@@ -55,30 +61,24 @@ public class PowerParsing implements GameBotParsing {
     @Async
     @Override
     public void closingGame() {
-        if (isClosing) return;
-        isClosing = true;
-
-        int times = ZoneConfig.getPower().getPowerMaker().getTimes();
-        Date gameDate = ZoneConfig.getPower().getPowerMaker().getGameDate(times);
+//        int times = ZoneConfig.getPower().getPowerMaker().getTimes();
+//        Date gameDate = ZoneConfig.getPower().getPowerMaker().getGameDate(times);
 
         String json = HttpParsing.getJson(Config.getSysConfig().getZone().getPowerUrl());
         if (json == null) {
-            isClosing = false;
             return;
         }
 
         Power result = JsonUtils.toModel(json, Power.class);
         if (result == null) {
-            isClosing = false;
             return;
         }
 
-        if (!gameDate.equals(result.getGameDate())) {
-            isClosing = false;
+        if (sdate.equals(result.getSdate())) {
             return;
         }
 
-        isClosing = powerBotService.closingGame(result);
+        powerBotService.closingGame(result);
 
         log.debug("파워볼 경기 종료 : {}회차", result.getRound());
     }

@@ -83,10 +83,9 @@ public class Power {
 
     //----------------------------------------------------------------
 
-    public Power(int times, Date gameDate) {
+    public Power(int times, int round, Date gameDate) {
         this.times = times;
-        this.round = (Config.getSysConfig().getZone().getPowerDay() + times) % 288;
-        if (this.round == 0) this.round = 288;
+        this.round = round > 288 ? round % 288 : round;
         this.gameDate = gameDate;
         this.sdate = DateUtils.format(gameDate, "yyyyMMddHHmm");
     }
