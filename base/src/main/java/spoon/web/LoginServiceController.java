@@ -36,7 +36,7 @@ public class LoginServiceController {
             case GOD:
             case SUPER:
             case ADMIN:
-                return Config.getPathAdmin() + "/game/match/complete";
+                return Config.getPathAdmin() + "/member/list";
             case AGENCY1:
             case AGENCY2:
                 return Config.getPathSeller() + "/sale/daily";

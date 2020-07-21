@@ -18,7 +18,7 @@
         <h1 th:text="${user.nickname}">routine1</h1>
         <nav>
             <ul class="gnb">
-                <li th:class="${gnb eq 'game'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/game/match/complete|}">스포츠</a></li>
+<!--                <li th:class="${gnb eq 'game'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/game/match/complete|}">스포츠</a></li>-->
                 <li th:if="${!sysConfig.zone.gnb.empty}" th:class="${gnb eq 'zone'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/zone/${sysConfig.zone.gnb}/config|}">실시간</a></li>
                 <li th:class="${gnb eq 'betting'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/betting/list?result=ing&role=USER|}">베팅</a></li>
                 <li th:class="${gnb eq 'payment'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/payment/deposit|}">충/환전</a></li>
