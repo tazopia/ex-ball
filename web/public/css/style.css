@@ -207,7 +207,6 @@ img {
   bottom: 0;
   background: url("/images/background.jpg") center center no-repeat;
   background-size: cover;
-  filter: blur(10px);
 }
 a,
 button {
@@ -245,6 +244,7 @@ header .gnb {
   line-height: 40px;
 }
 header .gnb .title {
+  display: none;
   position: absolute;
   left: 0;
   top: 0;
@@ -255,8 +255,7 @@ header .gnb .title {
   background: transparent;
 }
 header .gnb #rolling-wrap {
-  float: right;
-  width: 1160px;
+  width: 1280px;
   height: 40px;
   line-height: 40px;
   position: relative;
@@ -264,7 +263,7 @@ header .gnb #rolling-wrap {
 }
 header .gnb #rolling-wrap p {
   position: absolute;
-  left: 1160px;
+  left: 1280px;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -345,9 +344,8 @@ header .logo {
 }
 header .logo img {
   position: absolute;
-  top: 30px;
-  left: 20px;
-  bottom: 0;
+  left: 0;
+  bottom: 6px;
   margin: auto;
 }
 header .nav {
