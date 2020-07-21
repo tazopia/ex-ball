@@ -205,8 +205,9 @@ img {
   right: 0;
   top: 0;
   bottom: 0;
-  background: url("/images/background.jpg") center center no-repeat;
+  background: url("/images/background.jpg") center center no-repeat #000;
   background-size: cover;
+  opacity: 0.5;
 }
 a,
 button {
