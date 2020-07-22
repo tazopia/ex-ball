@@ -6,6 +6,7 @@ import spoon.gameZone.ZoneDto;
 import spoon.gameZone.powerLadder.PowerLadder;
 import spoon.gameZone.powerLadder.PowerLadderConfig;
 import spoon.gameZone.powerLadder.PowerLadderDto;
+import spoon.gameZone.powerLadder.PowerLadderScore;
 import spoon.support.web.AjaxResult;
 
 public interface PowerLadderService {
@@ -45,4 +46,5 @@ public interface PowerLadderService {
      */
     PowerLadderDto.Config gameConfig();
 
+    Iterable<PowerLadderScore> getScore();
 }

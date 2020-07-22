@@ -112,6 +112,35 @@
             <iframe id="zoneBox" style="position: absolute; width: 830px; height: 646px;" scrolling="no" th:src="@{${sysConfig.zone.kenoLadderPlayer}}"></iframe>
         </div>
     </div>
+	<div>
+		<table class="power score">
+			<colgroup>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+			</colgroup>
+			<thead>
+			<tr>
+				<th>날짜</th>
+				<th>회차</th>
+				<th>좌우</th>
+				<th>줄수</th>
+				<th>홀짝</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="s in score">
+				<td><span class="date">{{::s.date}}</span></td>
+				<td><span class="round1">{{::s.round}}</span> 회</td>
+				<td><img src="/images/powerball/{{s.start}}.png"/></td>
+				<td><img src="/images/powerball/line{{s.line}}.png"/></td>
+				<td><img src="/images/powerball/{{s.oe}}.png"/></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 <script layout:fragment="script" th:if="true">
@@ -126,6 +155,7 @@
         $scope.milliseconds = [[${user.milliseconds}]];
         $scope.bet = $scope.config.betTime > 0 ? 'on' : 'off';
         $scope.name = $scope.config.round + '회 키노사다리';
+        $scope.score = [(${score})];
 
         $interval(function () {
             $scope.setInfo();
@@ -136,6 +166,7 @@
                 $scope.milliseconds += 1000;
             } else {
                 $scope.setConfig();
+                $scope.setScore();
             }
         }, 1000);
 
@@ -188,6 +219,19 @@
                 $scope.timer.start();
                 $scope.name = $scope.config.round + '회 키노사다리';
                 $scope.bet = $scope.config.betTime > 0 ? 'on' : 'off';
+            });
+        };
+
+        $scope.setScore = function () {
+            $http({
+                url: path + '/zone/keno_ladder/score',
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Ajax': true
+                }
+            }).then(function success(response) {
+                $scope.score = response.data;
             });
         };
 

@@ -9,6 +9,7 @@ import spoon.common.net.HttpParsing;
 import spoon.common.utils.JsonUtils;
 import spoon.config.domain.Config;
 import spoon.gameZone.ZoneConfig;
+import spoon.gameZone.power.Power;
 import spoon.gameZone.powerLadder.PowerLadder;
 import spoon.gameZone.powerLadder.service.PowerLadderBotService;
 
@@ -22,28 +23,34 @@ public class PowerLadderParsing implements GameBotParsing {
 
     private PowerLadderBotService powerLadderBotService;
 
-    private static boolean isClosing = false;
-
-    private static Date sdate = new Date();
+    private static String sdate = "";
 
     @Async
     @Override
     public void parsingGame() {
-        isClosing = false;
+        String json = HttpParsing.getJson(Config.getSysConfig().getZone().getPowerUrl());
+        if (json == null) {
+            return;
+        }
+        Power result = JsonUtils.toModel(json, Power.class);
+        if (result == null) {
+            return;
+        }
 
         int count = 0;
-        int times = ZoneConfig.getPowerLadder().getPowerMaker().getTimes();
+
         Calendar cal = Calendar.getInstance();
-        cal.setTime(ZoneConfig.getPowerLadder().getPowerMaker().getGameDate(times));
+        cal.setTime(result.getGameDate());
+        int times = result.getTimes();
+        int round = result.getRound();
 
         for (int i = 0; i < 6; i++) {
             times++;
+            round++;
             cal.add(Calendar.MINUTE, 5);
 
-            if (cal.getTime().before(sdate)) continue;
-
             if (powerLadderBotService.notExist(cal.getTime())) {
-                PowerLadder powerLadder = new PowerLadder(times, cal.getTime());
+                PowerLadder powerLadder = new PowerLadder(round, times, cal.getTime());
                 powerLadder.setOdds(ZoneConfig.getPowerLadder().getOdds());
                 powerLadderBotService.addGame(powerLadder);
                 count++;
@@ -55,30 +62,22 @@ public class PowerLadderParsing implements GameBotParsing {
     @Async
     @Override
     public void closingGame() {
-        if (isClosing) return;
-        isClosing = true;
-
-        int times = ZoneConfig.getPowerLadder().getPowerMaker().getTimes();
-        Date gameDate = ZoneConfig.getPowerLadder().getPowerMaker().getGameDate(times);
-
         String json = HttpParsing.getJson(Config.getSysConfig().getZone().getPowerLadderUrl());
         if (json == null) {
-            isClosing = false;
             return;
         }
 
         PowerLadder result = JsonUtils.toModel(json, PowerLadder.class);
         if (result == null) {
-            isClosing = false;
             return;
         }
 
-        if (!gameDate.equals(result.getGameDate())) {
-            isClosing = false;
+        if (sdate.equals(result.getSdate())) {
             return;
         }
 
-        isClosing = powerLadderBotService.closingGame(result);
+        boolean success = powerLadderBotService.closingGame(result);
+        if (success) sdate = result.getSdate();
 
         log.debug("파워사다리 경기 종료 : {}회차", result.getRound());
     }

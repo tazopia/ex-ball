@@ -1,6 +1,7 @@
 package spoon.gameZone.powerLadder.service;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import spoon.config.service.ConfigService;
 import spoon.game.domain.MenuCode;
 import spoon.gameZone.ZoneConfig;
 import spoon.gameZone.ZoneDto;
+import spoon.gameZone.power.Power;
 import spoon.gameZone.powerLadder.*;
 import spoon.member.domain.Role;
 import spoon.member.entity.Member;
@@ -25,6 +27,8 @@ import spoon.member.service.MemberService;
 import spoon.support.web.AjaxResult;
 
 import java.util.Date;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @AllArgsConstructor
@@ -42,6 +46,8 @@ public class PowerLadderServiceImpl implements PowerLadderService {
     private PowerLadderRepository powerLadderRepository;
 
     private BetItemRepository betItemRepository;
+
+    private JPAQueryFactory queryFactory;
 
     private static QPowerLadder q = QPowerLadder.powerLadder;
 
@@ -222,5 +228,15 @@ public class PowerLadderServiceImpl implements PowerLadderService {
         gameConfig.setLineStart(config.isLineStart());
 
         return gameConfig;
+    }
+
+    @Override
+    public Iterable<PowerLadderScore> getScore() {
+        Iterable<PowerLadder> list =  queryFactory.select(q).from(q)
+                .where(q.closing.isTrue())
+                .orderBy(q.sdate.desc())
+                .limit(6)
+                .fetch();
+        return StreamSupport.stream(list.spliterator(), false).map(PowerLadderScore::of).collect(Collectors.toList());
     }
 }

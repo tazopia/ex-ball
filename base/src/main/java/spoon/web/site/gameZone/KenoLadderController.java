@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import spoon.common.utils.JsonUtils;
 import spoon.gameZone.KenoLadder.KenoLadderDto;
+import spoon.gameZone.KenoLadder.KenoLadderScore;
 import spoon.gameZone.KenoLadder.service.KenoLadderGameService;
 import spoon.gameZone.KenoLadder.service.KenoLadderService;
 import spoon.gameZone.ZoneDto;
@@ -28,6 +29,7 @@ public class KenoLadderController {
     @RequestMapping(value = "zone/keno_ladder", method = RequestMethod.GET)
     public String zone(ModelMap map) {
         map.addAttribute("config", JsonUtils.toString(kenoLadderService.gameConfig()));
+        map.addAttribute("score", JsonUtils.toString(kenoLadderService.getScore()));
         return "site/zone/keno_ladder";
     }
 
@@ -51,6 +53,12 @@ public class KenoLadderController {
             return new AjaxResult(false, "페이지를 찾을 수 없습니다.");
         }
         return kenoLadderGameService.betting(bet);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "zone/keno_ladder/score", method = RequestMethod.POST)
+    public Iterable<KenoLadderScore> getResult() {
+        return kenoLadderService.getScore();
     }
 
 }

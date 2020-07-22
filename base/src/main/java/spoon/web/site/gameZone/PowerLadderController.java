@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import spoon.common.utils.JsonUtils;
 import spoon.gameZone.ZoneDto;
 import spoon.gameZone.powerLadder.PowerLadderDto;
+import spoon.gameZone.powerLadder.PowerLadderScore;
 import spoon.gameZone.powerLadder.service.PowerLadderGameService;
 import spoon.gameZone.powerLadder.service.PowerLadderService;
 import spoon.support.web.AjaxResult;
@@ -28,6 +29,7 @@ public class PowerLadderController {
     @RequestMapping(value = "zone/power_ladder", method = RequestMethod.GET)
     public String zone(ModelMap map) {
         map.addAttribute("config", JsonUtils.toString(powerLadderService.gameConfig()));
+        map.addAttribute("score", JsonUtils.toString(powerLadderService.getScore()));
         return "site/zone/power_ladder";
     }
 
@@ -51,6 +53,12 @@ public class PowerLadderController {
             return new AjaxResult(false, "페이지를 찾을 수 없습니다.");
         }
         return powerLadderGameService.betting(bet);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "zone/power_ladder/score", method = RequestMethod.POST)
+    public Iterable<PowerLadderScore> getResult() {
+        return powerLadderService.getScore();
     }
 
 }

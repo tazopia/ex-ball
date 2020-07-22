@@ -28,11 +28,13 @@
 				<h3><span th:text="${siteConfig.companyName}">Soul</span> 파워볼 결과</h3>
 				<ul>
 					<li th:each="list : ${powerball}">
-						<span class="date" th:utext="${tag.dateWeek(list.gameDate)}">03.12(월) 23:00</span>
-						<span class="times" th:text="${tag.num(list.times)} + ' 회'"></span>
-						<span class="round" th:text="${list.round} + ' 회차'"></span>
-						<span class="balls" th:text="${list.ball}">VS</span>
-						<span class="pb" th:text="${list.pb}">VS</span>
+						<span class="date" th:text="${list.date}">03.12(월) 23:00</span>
+						<span class="times"><span th:text="${tag.num(list.times[0])} + ','"></span><span class="color02" th:text="${list.times[1]}"></span></span>
+						<span class="balls">
+							<img th:each="b : ${list.balls}" th:src="@{|/images/powerball/p${b}.png|}" style="padding: 0 2px;"/>
+						</span>
+						<span class="round"><img th:src="@{|/images/powerball/pb${list.pb}.png|}" style="padding: 0 2px;"/></span>
+						<span class="pb" th:text="${list.sum}"></span>
 					</li>
 				</ul>
 			</article>

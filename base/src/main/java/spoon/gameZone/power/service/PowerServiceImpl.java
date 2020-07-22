@@ -1,6 +1,7 @@
 package spoon.gameZone.power.service;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,9 @@ import spoon.member.service.MemberService;
 import spoon.support.web.AjaxResult;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @AllArgsConstructor
@@ -45,6 +49,8 @@ public class PowerServiceImpl implements PowerService {
     private BetItemRepository betItemRepository;
 
     private static QPower q = QPower.power;
+
+    private JPAQueryFactory queryFactory;
 
     @Transactional
     @Override
@@ -234,8 +240,12 @@ public class PowerServiceImpl implements PowerService {
     }
 
     @Override
-    public Page<Power> getClosing() {
-        PageRequest pageRequest = new PageRequest(1, 8, new Sort(Sort.Direction.DESC, "sdate"));
-        return powerRepository.findAll(new BooleanBuilder(q.closing.isTrue()), pageRequest);
+    public List<PowerScore> getScore() {
+        Iterable<Power> list = queryFactory.select(q).from(q)
+                .where(q.closing.isTrue())
+                .orderBy(q.sdate.desc())
+                .limit(5)
+                .fetch();
+        return StreamSupport.stream(list.spliterator(), false).map(PowerScore::of).collect(Collectors.toList());
     }
 }

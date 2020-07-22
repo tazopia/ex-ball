@@ -12,7 +12,32 @@
 				<iframe style="position: absolute; width: 830px; height: 646px;" scrolling="no" th:src="@{${sysConfig.zone.kenoLadderPlayer}}"></iframe>
 			</div>
 		</div>
+		<div class="table-wrap">
+			<table class="table-game table-list">
+				<caption>사다리</caption>
+				<colgroup>
 
+				</colgroup>
+				<thead>
+				<tr>
+					<th>날짜</th>
+					<th>회차</th>
+					<th>좌우</th>
+					<th>줄수</th>
+					<th>홀짝</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="s in score">
+					<td><span class="date">{{::s.date}}</span></td>
+					<td><span class="round1">{{::s.round}}</span> 회</td>
+					<td><img src="/images/powerball/{{s.start}}.png"/></td>
+					<td><img src="/images/powerball/line{{s.line}}.png"/></td>
+					<td><img src="/images/powerball/{{s.oe}}.png"/></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 		<h3>
 			<img ng-src="{{flag}}"/>
 			키노 사다리
@@ -135,6 +160,7 @@
         $scope.bet = $scope.config.betTime > 0 ? 'on' : 'off';
         $scope.name = $scope.config.round + '회 키노사다리';
         $scope.countdown = ['0', '0', '0', '0'];
+        $scope.score = [(${score})];
 
         $interval(function () {
             $scope.setInfo();
@@ -158,6 +184,7 @@
                 $scope.config.betTime--;
             } else {
                 $scope.setConfig();
+                $scope.setScore();
                 $scope.countdowon = ['0', '0', '0', '0'];
             }
         }, 1000);
@@ -194,6 +221,19 @@
                 $scope.config = response.data;
                 $scope.name = $scope.config.round + '회 키노사다리';
                 $scope.bet = $scope.config.betTime > 0 ? 'on' : 'off';
+            });
+        };
+
+        $scope.setScore = function () {
+            $http({
+                url: path + '/zone/power_ladder/score',
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Ajax': true
+                }
+            }).then(function success(response) {
+                $scope.score = response.data;
             });
         };
 

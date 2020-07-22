@@ -17,14 +17,14 @@
             <col style="width:80px;">
             <col>
             <col style="width:160px;">
-            <col style="width:120px;">
+<!--            <col style="width:120px;">-->
         </colgroup>
         <thead>
         <tr>
             <th>No.</th>
             <th>제목</th>
             <th>작성자</th>
-            <th>작성일</th>
+<!--            <th>작성일</th>-->
         </tr>
         </thead>
         <tbody>
@@ -36,10 +36,10 @@
                     <span class="hit" th:if="${b.comment gt 0}" th:text="'[' + ${tag.num(b.comment)} + ']'"></span>
                 </td>
                 <td class="user admin" th:utext="${tag.color(b.nickname)}"></td>
-                <td th:text="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></td>
+<!--                <td th:text="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></td>-->
             </tr>
         </th:block>
-        <th:block th:each="b,num : ${page.content}" th:with="total=${page.totalElements - page.number * page.size + 35045}">
+        <th:block th:each="b,num : ${page.content}" th:with="total=${page.totalElements - page.number * page.size + 1}">
             <tr>
                 <td th:text="${total - num.count}">1</td>
                 <td class="title" th:onclick="|location.href='${siteConfig.pathSite}/board/${b.code}/${b.id}?page=${page.number + 1}'|">
@@ -53,7 +53,7 @@
                     <span th:replace="fragments/site :: level(lv=${b.level})"></span>
                     <span th:text="${b.nickname}" th:remove="tag"></span>
                 </td>
-                <td th:text="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></td>
+<!--                <td th:text="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></td>-->
             </tr>
         </th:block>
         </tbody>

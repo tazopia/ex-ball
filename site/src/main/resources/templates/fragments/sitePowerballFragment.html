@@ -54,7 +54,7 @@
 			</ul>
 		</li>
         <li th:class="${gnb eq 'score'} ? 'on'">
-            <a th:href="@{|${siteConfig.pathSite}/zone/power/cross|}">경기결과</a>
+            <a th:href="@{|${siteConfig.pathSite}/zone/power/score|}">경기결과</a>
             <ul class="sub">
 <!--                <li th:class="${lnb eq 'cross'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/score/cross|}">크로스</a></li>-->
 <!--                <li th:class="${lnb eq 'special'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/score/special|}">스페셜</a></li>-->
@@ -81,11 +81,11 @@
         </li>
         <li th:class="${gnb eq 'betting'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/betting|}">베팅내역</a></li>
         <li th:class="${gnb eq 'board'} ? 'on'">
-            <a th:href="@{|${siteConfig.pathSite}/board/free|}">게시판</a>
+            <a th:href="@{|${siteConfig.pathSite}/board/notice|}">공지사항</a>
             <ul class="sub">
                 <li th:class="${lnb eq 'notice'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/board/notice|}">공지사항</a></li>
                 <li th:class="${lnb eq 'event'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/board/event|}">이벤트</a></li>
-                <li th:class="${lnb eq 'free'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/board/free|}">자유게시판</a></li>
+<!--                <li th:class="${lnb eq 'free'} ? 'on'"><a th:href="@{|${siteConfig.pathSite}/board/free|}">자유게시판</a></li>-->
             </ul>
         </li>
         <li th:class="${gnb eq 'customer' ? 'on' : ''}">

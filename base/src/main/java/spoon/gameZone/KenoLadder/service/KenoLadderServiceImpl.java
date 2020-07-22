@@ -1,6 +1,7 @@
 package spoon.gameZone.KenoLadder.service;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,8 @@ import spoon.member.service.MemberService;
 import spoon.support.web.AjaxResult;
 
 import java.util.Date;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @AllArgsConstructor
@@ -42,6 +45,8 @@ public class KenoLadderServiceImpl implements KenoLadderService {
     private KenoLadderRepository kenoLadderRepository;
 
     private BetItemRepository betItemRepository;
+
+    private JPAQueryFactory queryFactory;
 
     private static QKenoLadder q = QKenoLadder.kenoLadder;
 
@@ -217,5 +222,15 @@ public class KenoLadderServiceImpl implements KenoLadderService {
         gameConfig.setLineStart(config.isLineStart());
 
         return gameConfig;
+    }
+
+    @Override
+    public Iterable<KenoLadderScore> getScore() {
+        Iterable<KenoLadder> list = queryFactory.select(q).from(q)
+                .where(q.closing.isTrue())
+                .orderBy(q.sdate.desc())
+                .limit(6)
+                .fetch();
+        return StreamSupport.stream(list.spliterator(), false).map(KenoLadderScore::of).collect(Collectors.toList());
     }
 }

@@ -24,7 +24,7 @@
                     <p class="info">
                         <span th:class="'label ' + ${b.code}" th:text="${#strings.toUpperCase(b.code)}"></span>
                         <span class="user admin" th:utext="${tag.color(siteConfig.nickname)}"></span>
-                        <span class="date" th:text="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></span>
+<!--                        <span class="date" th:text="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></span>-->
                     </p>
                     <span class="hit" th:text="${tag.num(b.comment)}"></span>
                 </li>
@@ -38,13 +38,13 @@
                     </p>
                     <p class="info" th:if="${b.role.name() eq 'ADMIN'}">
                         <span th:class="'label ' + ${b.code}" th:text="${#strings.toUpperCase(b.code)}"></span>
-                        <span class="user admin" th:utext="${tag.color(siteConfig.nickname)}"></span>
-                        <span class="date" th:text="${tag.dayWeek(b.regDate)}"></span>
+                        <span class="date admin" th:utext="${tag.color(siteConfig.nickname)}"></span>
+<!--                        <span class="date" th:text="${tag.dayWeek(b.regDate)}"></span>-->
                     </p>
                     <p class="info" th:if="${b.role.name() ne 'ADMIN'}">
                         <span th:replace="fragments/mobile :: level(lv=${b.level})"></span>
-                        <span class="user" th:text="${b.nickname}"></span>
-                        <span class="date" th:utext="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></span>
+                        <span class="date" th:text="${b.nickname}"></span>
+<!--                        <span class="date" th:utext="${#dates.format(b.regDate, 'yyyy.MM.dd')}"></span>-->
                     </p>
                     <span class="hit" th:text="${tag.num(b.comment)}"></span>
                 </li>

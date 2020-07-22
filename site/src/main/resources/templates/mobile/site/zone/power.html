@@ -18,6 +18,39 @@
 			<span class="color03" th:text="'[제 {{config.times | number : 0}}회차]'">256회차</span>
 		</h3>
 
+		<div class="table-wrap">
+			<table class="table-game table-list">
+				<caption>사다리</caption>
+				<colgroup>
+
+				</colgroup>
+				<thead>
+				<tr>
+					<th rowspan="2">회차</th>
+					<th colspan="2">파워볼</th>
+					<th colspan="3">일반볼</th>
+				</tr>
+				<tr>
+					<th>홀짝</th>
+					<th>언오버</th>
+					<th>대중소</th>
+					<th>홀짝</th>
+					<th>언오버</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="s in score">
+					<td>{{::s.times[0]}}<span class="color03">{{::s.times[1]}}</span>회</td>
+					<td><img src="/images/powerball/{{s.pbOe}}.png"/></td>
+					<td><img src="/images/powerball/{{s.pbOu}}.png"/></td>
+					<td><img src="/images/powerball/{{s.size}}.png"/></td>
+					<td><img src="/images/powerball/{{s.oe}}.png"/></td>
+					<td><img src="/images/powerball/{{s.ou}}.png"/></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
         <div class="timer" ng-cloak ng-show="config.enabled">
             <em>베팅남은시간</em>
             <div class="timer-box">
@@ -213,6 +246,7 @@
             </table>
         </div>
     </div>
+
 </main>
 
 <script layout:fragment="script" th:if="true">
@@ -235,6 +269,7 @@
         $scope.bet = $scope.config.betTime > 0 ? 'on' : 'off';
         $scope.name = $scope.config.round + '회 파워볼';
         $scope.countdown = ['0', '0', '0', '0'];
+        $scope.score = [(${score})];
 
         $interval(function () {
             $scope.setInfo();
@@ -258,6 +293,7 @@
                 $scope.config.betTime--;
             } else {
                 $scope.setConfig();
+                $scope.setScore();
                 $scope.countdowon = ['0', '0', '0', '0'];
             }
         }, 1000);
@@ -294,6 +330,19 @@
                 $scope.config = response.data;
                 $scope.name = $scope.config.round + '회 파워볼';
                 $scope.bet = $scope.config.betTime > 0 ? 'on' : 'off';
+            });
+        };
+
+        $scope.setScore = function () {
+            $http({
+                url: path + '/zone/power/score',
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Ajax': true
+                }
+            }).then(function success(response) {
+                $scope.score = response.data;
             });
         };
 

@@ -30,7 +30,7 @@ public class MainController {
     public String main(ModelMap map, SitePreference preference) {
         if (!preference.isMobile()) {
             map.addAttribute("gameList", gameMapper.mainList());
-            map.addAttribute("powerball", powerService.getClosing().getContent());
+            map.addAttribute("powerball", powerService.getScore());
             map.addAttribute("noticeList", boardMapper.mainNotice());
             map.addAttribute("eventList", boardMapper.mainEvent());
         }

@@ -6,6 +6,7 @@ import spoon.gameZone.ZoneDto;
 import spoon.gameZone.power.Power;
 import spoon.gameZone.power.PowerConfig;
 import spoon.gameZone.power.PowerDto;
+import spoon.gameZone.power.PowerScore;
 import spoon.support.web.AjaxResult;
 
 import java.util.List;
@@ -47,5 +48,6 @@ public interface PowerService {
      */
     PowerDto.Config gameConfig();
 
-    Page<Power> getClosing();
+    // 결과를 가져온다.
+    List<PowerScore> getScore();
 }

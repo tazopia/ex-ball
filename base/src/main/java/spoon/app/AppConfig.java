@@ -1,5 +1,6 @@
 package spoon.app;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.modelmapper.ModelMapper;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -13,6 +14,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.persistence.EntityManager;
 
 @Configuration
 @EnableSpringDataWebSupport
@@ -40,6 +43,11 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public JPAQueryFactory queryFactory(EntityManager entityManager) {
+        return new JPAQueryFactory(entityManager);
     }
 
 }

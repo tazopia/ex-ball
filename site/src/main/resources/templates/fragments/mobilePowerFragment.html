@@ -54,10 +54,10 @@
 					<a th:if="${sysConfig.zone.dog}" th:href="@{|${siteConfig.pathSite}/zone/dog|}"><img src="/images/m/m-dog.png"/>개경주</a>
 					<a th:if="${sysConfig.zone.luck}" th:href="@{|${siteConfig.pathSite}/zone/luck|}"><img src="/images/m/m-luck.png"/>세븐럭</a>
 				</th:block>
-				<a th:href="@{|${siteConfig.pathSite}/score/cross|}"><img src="/images/m/m-result.png"/>경기결과</a>
+				<a th:href="@{|${siteConfig.pathSite}/zone/power/score|}"><img src="/images/m/m-result.png"/>경기결과</a>
 				<a th:href="@{|${siteConfig.pathSite}/betting|}"><img src="/images/m/m-betlist.png"/>베팅내역</a>
 				<a th:href="@{|${siteConfig.pathSite}/board/notice|}"><img src="/images/m/m-notice.png"/>공지사항</a>
-				<a th:href="@{|${siteConfig.pathSite}/board/free|}"><img src="/images/m/m-freeboard.png"/>자유게시판</a>
+				<a th:href="@{|${siteConfig.pathSite}/board/event|}"><img src="/images/m/m-freeboard.png"/>이벤트</a>
 				<a th:href="@{|${siteConfig.pathSite}/customer/qna|}"><img src="/images/m/m-customer.png"/>고객센터</a>
 				<a th:if="${sysConfig.event.daily}" th:href="@{|${siteConfig.pathSite}/event/daily|}"><img src="/images/m/m-daily.png"/>출석체크</a>
 				<br/>

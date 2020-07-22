@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import spoon.gameZone.KenoLadder.KenoLadder;
 import spoon.gameZone.KenoLadder.KenoLadderConfig;
 import spoon.gameZone.KenoLadder.KenoLadderDto;
+import spoon.gameZone.KenoLadder.KenoLadderScore;
 import spoon.gameZone.ZoneDto;
 import spoon.support.web.AjaxResult;
 
@@ -45,4 +46,5 @@ public interface KenoLadderService {
      */
     KenoLadderDto.Config gameConfig();
 
+    Iterable<KenoLadderScore> getScore();
 }

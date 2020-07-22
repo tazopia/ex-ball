@@ -78,7 +78,8 @@ public class PowerParsing implements GameBotParsing {
             return;
         }
 
-        powerBotService.closingGame(result);
+        boolean success = powerBotService.closingGame(result);
+        if (success) sdate = result.getSdate();
 
         log.debug("파워볼 경기 종료 : {}회차", result.getRound());
     }

@@ -12,8 +12,8 @@
         </h4>
         <p class="info" th:if="${board.role.name() eq 'ADMIN'}">
             <span th:class="'label ' + ${board.code}" th:text="${#strings.toUpperCase(board.code)}"></span>
-            <span class="user admin" th:utext="${tag.color(siteConfig.nickname)}"></span>
-            <span class="date" th:text="${#dates.format(board.regDate, 'yyyy.MM.dd')}"></span>
+            <span class="date admin" th:utext="${tag.color(siteConfig.nickname)}"></span>
+<!--            <span class="date" th:text="${#dates.format(board.regDate, 'yyyy.MM.dd')}"></span>-->
             <span class="hit" th:text="${tag.num(board.comment)}"></span>
         </p>
         <p class="info" th:if="${board.role.name() ne 'ADMIN'}">
@@ -25,7 +25,7 @@
         <h3>
             <p class="btn-box">
                 <a th:if="${user.userid eq board.userid}" href="#" th:onclick="|goDelete(${board.id});return false;|" class="btn write">삭제하기</a>
-                <a th:href="|${siteConfig.pathSite}/board/free?page=${page}|" class="btn">돌아가기</a>
+                <a th:href="|${siteConfig.pathSite}/board/${code}?page=${page}|" class="btn">돌아가기</a>
             </p>
         </h3>
     </div>
