@@ -5,19 +5,17 @@
 <body ng-controller="gameCtrl">
 
 <main class="page" layout:fragment="page">
+	<h3>
+		<img ng-src="{{flag}}"/>
+		파워볼
+		<span class="color03" th:text="'[제 {{config.times | number : 0}}회차]'">256회차</span>
+	</h3>
     <div class="zone">
 		<div id="zoneBox">
 			<div>
 				<iframe style="position: absolute; width: 830px; height: 646px;" scrolling="no" th:src="@{${sysConfig.zone.powerPlayer}}"></iframe>
 			</div>
 		</div>
-
-		<h3>
-			<img ng-src="{{flag}}"/>
-			파워볼
-			<span class="color03" th:text="'[제 {{config.times | number : 0}}회차]'">256회차</span>
-		</h3>
-
 		<div class="table-wrap">
 			<table class="table-game table-list">
 				<caption>사다리</caption>
@@ -50,7 +48,7 @@
 				</tbody>
 			</table>
 		</div>
-
+		<br/>
         <div class="timer" ng-cloak ng-show="config.enabled">
             <em>베팅남은시간</em>
             <div class="timer-box">

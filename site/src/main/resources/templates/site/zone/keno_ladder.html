@@ -10,7 +10,42 @@
         키노 사다리
         <span class="color03" th:text="'[제 {{config.round}}회차]'">256회차</span>
     </h3>
-
+	<div class="box">
+		<div style="margin: 0 auto; width: 830px; height: 646px; overflow: hidden;position: relative;">
+			<iframe id="zoneBox" style="position: absolute; width: 830px; height: 646px;" scrolling="no" th:src="@{${sysConfig.zone.kenoLadderPlayer}}"></iframe>
+		</div>
+	</div>
+	<br/>
+	<div>
+		<table class="power score">
+			<colgroup>
+				<col style="width: 220px;">
+				<col>
+				<col>
+				<col>
+				<col>
+			</colgroup>
+			<thead>
+			<tr>
+				<th>날짜</th>
+				<th>회차</th>
+				<th>좌우</th>
+				<th>줄수</th>
+				<th>홀짝</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="s in score">
+				<td><span class="date">{{::s.date}}</span></td>
+				<td><span class="round1">{{::s.round}}</span> 회</td>
+				<td><img src="/images/powerball/{{s.start}}.png"/></td>
+				<td><img src="/images/powerball/line{{s.line}}.png"/></td>
+				<td><img src="/images/powerball/{{s.oe}}.png"/></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<br/>
     <div class="zone">
         <div class="timer" ng-cloak ng-show="config.enabled">
             <div class="timer-box">
@@ -106,41 +141,7 @@
             </table>
         </div>
     </div>
-    <br/>
-    <div class="box">
-        <div style="margin: 0 auto; width: 830px; height: 646px; overflow: hidden;position: relative;">
-            <iframe id="zoneBox" style="position: absolute; width: 830px; height: 646px;" scrolling="no" th:src="@{${sysConfig.zone.kenoLadderPlayer}}"></iframe>
-        </div>
-    </div>
-	<div>
-		<table class="power score">
-			<colgroup>
-				<col style="width: 220px;">
-				<col>
-				<col>
-				<col>
-				<col>
-			</colgroup>
-			<thead>
-			<tr>
-				<th>날짜</th>
-				<th>회차</th>
-				<th>좌우</th>
-				<th>줄수</th>
-				<th>홀짝</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr ng-repeat="s in score">
-				<td><span class="date">{{::s.date}}</span></td>
-				<td><span class="round1">{{::s.round}}</span> 회</td>
-				<td><img src="/images/powerball/{{s.start}}.png"/></td>
-				<td><img src="/images/powerball/line{{s.line}}.png"/></td>
-				<td><img src="/images/powerball/{{s.oe}}.png"/></td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
+	<br/>
 </section>
 
 <script layout:fragment="script" th:if="true">

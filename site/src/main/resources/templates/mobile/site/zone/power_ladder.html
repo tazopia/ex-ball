@@ -5,6 +5,12 @@
 <body ng-controller="gameCtrl">
 
 <main class="page" layout:fragment="page">
+	<h3>
+		<img ng-src="{{flag}}"/>
+		파워볼 사다리
+		<span class="color03" th:text="'[제 {{config.round}}회차]'">256회차</span>
+	</h3>
+
     <div class="zone">
 		<div id="zoneBox">
 			<div>
@@ -38,13 +44,7 @@
 				</tbody>
 			</table>
 		</div>
-
-		<h3>
-			<img ng-src="{{flag}}"/>
-			파워볼 사다리
-			<span class="color03" th:text="'[제 {{config.round}}회차]'">256회차</span>
-		</h3>
-
+		<br/>
         <div class="timer" ng-cloak ng-show="config.enabled">
             <em>베팅남은시간</em>
             <div class="timer-box">
