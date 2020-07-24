@@ -22,7 +22,7 @@
             <span class="color01">베팅내역은 최대 일주일치만 확인 하실 수 있습니다.</span>
         </p>
         <p style="padding:10px 0; text-align: center;">
-            <a href="#" class="btn btn-box btn01" onclick="addBoard();">선택항목 내역등록</a>
+<!--            <a href="#" class="btn btn-box btn01" onclick="addBoard();">선택항목 내역등록</a>-->
             <a href="#" class="btn btn-box btn02" onclick="goDeleteClosing();">종료내역 전체삭제</a>
         </p>
     </div>
@@ -110,8 +110,8 @@
                     </em>
 
                     <div class="btn-box">
-                        <input type="checkbox" name="betId" th:value="${b.id}" style="width: 26px; height: 26px; float: left;"/>
-                        <a th:href="@{|${siteConfig.pathSite}/board/free/add?betId=${b.id}|}" class="btn btn01">내역 등록</a>
+<!--                        <input type="checkbox" name="betId" th:value="${b.id}" style="width: 26px; height: 26px; float: left;"/>-->
+<!--                        <a th:href="@{|${siteConfig.pathSite}/board/free/add?betId=${b.id}|}" class="btn btn01">내역 등록</a>-->
                         <a th:if="${b.closing}" href="#" th:onclick="|goDelete('${b.id}');return false;|" class="btn btn02">내역 삭제</a>
                         <a th:if="${b.canCancel}" href="#" th:onclick="|goCancel('${b.id}');return false;|" class="btn btn03">베팅 취소</a>
                     </div>

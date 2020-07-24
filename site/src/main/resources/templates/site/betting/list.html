@@ -23,7 +23,7 @@
             <br/><br/>
             <span class="color01">베팅내역은 최대 일주일치만 확인 하실 수 있습니다.</span>
         </p>
-        <a href="#" class="btn btn-box btn01" style="right: 170px;" onclick="addBoard();">선택항목 내역등록</a>
+<!--        <a href="#" class="btn btn-box btn01" style="right: 170px;" onclick="addBoard();">선택항목 내역등록</a>-->
         <a href="#" class="btn btn-box btn02"  onclick="goDeleteClosing();">종료내역 전체삭제</a>
     </div>
     <br/><br/>
@@ -88,7 +88,7 @@
         </tr>
         <tr>
             <td class="betInfo" colspan="10">
-                <input type="checkbox" name="betId" th:value="${b.id}"/>
+<!--                <input type="checkbox" name="betId" th:value="${b.id}"/>-->
                 <span class="dateDay" th:utext="${tag.dayWeekTimes(b.betDate)}">07/20(토)</span>
                 <span class="betMoney">
                     베팅금액 : <span class="money" th:text="${tag.num(b.betMoney)}">1,000</span>원
@@ -104,7 +104,7 @@
                 </span>
 
                 <span class="btn-box">
-                    <a th:href="@{|${siteConfig.pathSite}/board/free/add?betId=${b.id}|}" class="btn btn01">내역 등록</a>
+<!--                    <a th:href="@{|${siteConfig.pathSite}/board/free/add?betId=${b.id}|}" class="btn btn01">내역 등록</a>-->
                     <a th:if="${b.closing}" href="#" th:onclick="|goDelete('${b.id}');return false;|" class="btn btn02">내역 삭제</a>
                     <a th:if="${b.canCancel}" href="#" th:onclick="|goCancel('${b.id}');return false;|" class="btn btn03">베팅 취소</a>
                 </span>
