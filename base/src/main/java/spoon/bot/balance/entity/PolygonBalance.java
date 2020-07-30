@@ -22,6 +22,7 @@ public class PolygonBalance {
 
     private String gameType;
 
+    @Column(length = 1024)
     private String betType;
 
     private long price;

@@ -137,12 +137,12 @@
                     <i th:class="${m.black} ? 'fa fa-volume-up' : 'fa fa-volume-up'"></i>
                 </td>
                 <td class="memo">
-                    <em th:class="${m.balanceLadder} ? 'memo color04' : 'memo'" th:text="${m.balanceLadder ? 'O' : 'X'}"></em>
-                    <em th:class="${m.balanceDari} ? 'memo color04' : 'memo'" th:text="${m.balanceDari ? 'O' : 'X'}">다리</em>
-                    <em th:class="${m.balanceLowhi} ? 'memo color04' : 'memo'" th:text="${m.balanceLowhi ? 'O' : 'X'}">로하이</em>
-                    <em th:class="${m.balanceAladdin} ? 'memo color04' : 'memo'" th:text="${m.balanceAladdin ? 'O' : 'X'}">알라딘</em>
-                    <em th:if="false" th:class="${m.balancePower} ? 'memo color04' : 'memo'" th:text="${m.balancePower ? 'O' : 'X'}">파워볼</em>
-                    <span class="balance">사다리 | 다리다리 | 로하이 | 알라딘</span>
+                    <em th:if="false" th:class="${m.balanceLadder} ? 'memo color04' : 'memo'" th:text="${m.balanceLadder ? 'O' : 'X'}"></em>
+                    <em th:if="false" th:class="${m.balanceDari} ? 'memo color04' : 'memo'" th:text="${m.balanceDari ? 'O' : 'X'}">다리</em>
+                    <em th:if="false" th:class="${m.balanceLowhi} ? 'memo color04' : 'memo'" th:text="${m.balanceLowhi ? 'O' : 'X'}">로하이</em>
+                    <em th:if="false" th:class="${m.balanceAladdin} ? 'memo color04' : 'memo'" th:text="${m.balanceAladdin ? 'O' : 'X'}">알라딘</em>
+                    <em th:class="${m.balancePower} ? 'memo color04' : 'memo'" th:text="${m.balancePower ? 'O' : 'X'}">파워볼</em>
+                    <span class="balance">파워볼</span>
                 </td>
                 <td class="color02 popup" th:onclick="|popup.customer.memo('${m.userid}');|"><i class="fa fa-envelope-o"></i></td>
                 <td class="memo" th:class="${#strings.isEmpty(m.memo) ? 'memo' : 'memo color01'}">

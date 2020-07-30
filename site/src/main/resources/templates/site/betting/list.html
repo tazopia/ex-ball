@@ -62,8 +62,8 @@
             <td class="over" th:text="${item.gameCode.name() eq 'OVER_UNDER' ? 'O' : 'H'}">H</td>
             <td th:class="${(item.betTeam eq 'home' ? 'home on' : 'home') + (item.gameResult.name() eq 'HOME' or item.gameResult.name() eq 'OVER' ? ' hit' : '')}">
                 <span th:remove="tag" th:text="${item.teamHome}">홈팀</span>
-				<span th:if="${item.special} != '' and ${!#strings.contains(item.special, '|')}" class="color01" th:text="${item.special}"></span>
-				<span th:if="${item.special} != '' and ${#strings.contains(item.special, '|')}" class="color01" th:text="${#strings.arraySplit(item.special, '|')[0]}"></span>
+<!--				<span th:if="${item.special} != '' and ${!#strings.contains(item.special, '|')}" class="color01" th:text="${item.special}"></span>-->
+<!--				<span th:if="${item.special} != '' and ${#strings.contains(item.special, '|')}" class="color01" th:text="${#strings.arraySplit(item.special, '|')[0]}"></span>-->
                 <span class="odds" th:text="${tag.odds(item.oddsHome)}">0.01</span>
 				<img th:if="${item.gameCode.name() eq 'OVER_UNDER'}" src="/images/icon_over.gif" style="margin-left:5px;"/>
             </td>
@@ -79,8 +79,8 @@
             <td th:class="${(item.betTeam eq 'away' ? 'away on' : 'away') + (item.gameResult.name() eq 'AWAY' or item.gameResult.name() eq 'UNDER' ? ' hit' : '')}">
 				<img th:if="${item.gameCode.name() eq 'OVER_UNDER'}" src="/images/icon_under.gif" style="margin-left:5px;"/>
 				<span class="odds" th:text="${tag.odds(item.oddsAway)}">0.01</span>
-				<span th:if="${item.special} != '' and ${!#strings.contains(item.special, '|')}" class="color01" th:text="${item.special}"></span>
-				<span th:if="${item.special} != '' and ${#strings.contains(item.special, '|')}" class="color01" th:text="${#strings.arraySplit(item.special, '|')[1]}"></span>
+<!--				<span th:if="${item.special} != '' and ${!#strings.contains(item.special, '|')}" class="color01" th:text="${item.special}"></span>-->
+<!--				<span th:if="${item.special} != '' and ${#strings.contains(item.special, '|')}" class="color01" th:text="${#strings.arraySplit(item.special, '|')[1]}"></span>-->
                 <span th:remove="tag" th:text="${item.teamAway}">홈팀</span>
             </td>
             <td class="under" th:text="${item.gameCode.name() eq 'OVER_UNDER' ? 'U' : 'A'}">H</td>

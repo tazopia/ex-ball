@@ -11,10 +11,78 @@
 <div layout:fragment="content">
     <form id="frm" method="post" th:object="${siteConfig}" onsubmit="return saveConfig();">
         <section>
+			<div class="panel-header">
+				<h3>
+					<i class="bul fa fa-cog"></i>
+					사이트 설정
+				</h3>
+			</div>
+			<table class="table-read">
+				<caption>사이트 설정</caption>
+				<colgroup>
+					<col style="width:220px;">
+					<col>
+				</colgroup>
+				<tbody>
+				<tr>
+					<th class="required">회사명</th>
+					<td>
+						<label>회사명 : <input type="text" th:field="*{companyName}"/></label>
+						<label>Since : <input type="text" th:field="*{since}" /></label>
+					</td>
+				</tr>
+				<tr>
+					<th class="required">게시물 닉네임</th>
+					<td>
+						<input type="text" th:field="*{nickname}" style="width: 90%;" placeholder="html 태그 허용" />
+					</td>
+				</tr>
+				<tr>
+					<th class="required">관리자 IP 허용</th>
+					<td>
+						관리자 로그인 시
+						<select th:field="*{ipAdmin}">
+							<option th:value="true">등록된 아이피로만 접근 허용</option>
+							<option th:value="false">모든 아이피로 접근 허용</option>
+						</select>
+						합니다.
+						<span class="color02">관리자 IP 허용에 미리 등록하시고 사용하시기 바랍니다.</span>
+					</td>
+				</tr>
+				<tr>
+					<th class="required">사용자 IP 제한</th>
+					<td>
+						사용자 로그인 시
+						<select th:field="*{ipUser}">
+							<option th:value="true">등록된 아이피는 접근 금지</option>
+							<option th:value="false">모든 아이피로 접근 허용</option>
+						</select>
+						합니다.
+					</td>
+				</tr>
+				<tr>
+					<th class="required" rowspan="2">서버 점검</th>
+					<td>
+						사이트를
+						<select th:field="*{block}">
+							<option th:value="true">내립니다. (서버 점검 페이지가 나옵니다.)</option>
+							<option th:value="false">올립니다. (정상적으로 운영 중입니다.)</option>
+						</select>
+						<span th:class="${siteConfig.block ? 'color05' : 'color04'}" th:text="${siteConfig.block ? '현재 서버 점검 중입니다.' : '사이트 정상 작동 합니다.'}"></span>
+						<span><a href="/block" target="_blank">미리보기</a></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea th:field="*{blockMessage}" style="width: 90%; height: 120px;"></textarea>
+					</td>
+				</tr>
+				</tbody>
+			</table>
             <div class="panel-header">
-                <h3>
+                <h3 class="color01">
                     <i class="bul fa fa-cog"></i>
-                    사이트 설정
+                    파워볼 보험 설정
                 </h3>
             </div>
             <table class="table-read">
@@ -24,59 +92,39 @@
                     <col>
                 </colgroup>
                 <tbody>
+				<tr>
+					<th class="required">보험 사용설정</th>
+					<td>
+						<label>사용함 : <input type="radio" th:field="*{balance.enabled}" th:value="'true'"/></label>
+						<label>사용않함 : <input type="radio" th:field="*{balance.enabled}" th:value="'false'"/></label>
+					</td>
+				</tr>
                 <tr>
-                    <th class="required">회사명</th>
+                    <th class="required">보험 서버</th>
                     <td>
-                        <label>회사명 : <input type="text" th:field="*{companyName}"/></label>
-                        <label>Since : <input type="text" th:field="*{since}" /></label>
+                        <label><input type="text" th:field="*{balance.host}" style="width:800px;"/></label>
                     </td>
                 </tr>
+				<tr>
+					<th class="required">보험 API</th>
+					<td>
+						<label><input type="text" th:field="*{balance.key}" style="width:800px;"/></label>
+					</td>
+				</tr>
                 <tr>
-                    <th class="required">게시물 닉네임</th>
+                    <th class="required">최소금액</th>
                     <td>
-                        <input type="text" th:field="*{nickname}" style="width: 90%;" placeholder="html 태그 허용" />
+                        <input type="text" class="num" th:field="*{balance.min}" />
+						<span class="color02">0 으로 설정하시면 금액에 관계없이 보험에 들게 됩니다. - 는 사용하지 마세요.</span>
                     </td>
                 </tr>
-                <tr>
-                    <th class="required">관리자 IP 허용</th>
-                    <td>
-                        관리자 로그인 시
-                        <select th:field="*{ipAdmin}">
-                            <option th:value="true">등록된 아이피로만 접근 허용</option>
-                            <option th:value="false">모든 아이피로 접근 허용</option>
-                        </select>
-                        합니다.
-                        <span class="color02">관리자 IP 허용에 미리 등록하시고 사용하시기 바랍니다.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="required">사용자 IP 제한</th>
-                    <td>
-                        사용자 로그인 시
-                        <select th:field="*{ipUser}">
-                            <option th:value="true">등록된 아이피는 접근 금지</option>
-                            <option th:value="false">모든 아이피로 접근 허용</option>
-                        </select>
-                        합니다.
-                    </td>
-                </tr>
-                <tr>
-                    <th class="required" rowspan="2">서버 점검</th>
-                    <td>
-                        사이트를
-                        <select th:field="*{block}">
-                            <option th:value="true">내립니다. (서버 점검 페이지가 나옵니다.)</option>
-                            <option th:value="false">올립니다. (정상적으로 운영 중입니다.)</option>
-                        </select>
-                        <span th:class="${siteConfig.block ? 'color05' : 'color04'}" th:text="${siteConfig.block ? '현재 서버 점검 중입니다.' : '사이트 정상 작동 합니다.'}"></span>
-                        <span><a href="/block" target="_blank">미리보기</a></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <textarea th:field="*{blockMessage}" style="width: 90%; height: 120px;"></textarea>
-                    </td>
-                </tr>
+				<tr>
+					<th class="required">요율</th>
+					<td>
+						<input type="text" class="num" th:field="*{balance.rate}" /> %
+						<span class="color03">보험을 요율을 적용하여 처리 합니다. 10,000원 보험에 50% 면 5,000원만 보험 적용 됩니다.</span>
+					</td>
+				</tr>
                 </tbody>
             </table>
             <div class="panel-body">

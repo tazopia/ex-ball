@@ -24,8 +24,21 @@ public class SiteConfig {
 
     private Join join = new Join();
 
+    private Balance balance = new Balance();
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
-    public class Join {
+    public static class Balance {
+        private boolean enabled;
+        private String key = "LOV0R96tCIzxoIAbIbK4obYoKSLvB8w1LIY8oFOqjbCccKZRowtG00tJX0NQ";
+        private String host = "http://api.pb1004.com/api/bettings";
+        private long min = 0;
+        private double rate = 100D;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @Data
+    public static class Join {
         private boolean joinButton;
         private boolean joinCodePage;
         private boolean showRecommend;
@@ -42,8 +55,9 @@ public class SiteConfig {
 
     private Point point = new Point();
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
-    public class Point {
+    public static class Point {
         private boolean block;
 
         // 충전 최소, 기본단위

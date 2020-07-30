@@ -196,7 +196,7 @@ public class PowerGameServiceImpl implements PowerGameService {
     @Transactional
     protected void addAmount(String sdate) {
         try {
-            long[] amount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            long[] amount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             List<BetDto.ZoneAmount> list = betMapper.zoneAmount(MenuCode.POWER, sdate);
             for (BetDto.ZoneAmount bet : list) {
                 amount[bet.getBetZone()] = bet.getAmount();
@@ -205,7 +205,7 @@ public class PowerGameServiceImpl implements PowerGameService {
             power.setAmount(amount);
             powerRepository.saveAndFlush(power);
         } catch (RuntimeException e) {
-            log.error("{} 베팅시 게임별 베팅금액 계산에 실패 하였습니다. - {}", e.getMessage());
+            log.error("베팅시 게임별 베팅금액 계산에 실패 하였습니다. - {}", e.getMessage(), e);
             log.info("{}", ErrorUtils.trace(e.getStackTrace()));
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
         }
