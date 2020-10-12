@@ -10,7 +10,6 @@ import spoon.bot.balance.domain.WorldResult;
 import spoon.bot.balance.entity.PolygonBalance;
 import spoon.bot.balance.repository.PolygonBalanceRepository;
 import spoon.common.net.HttpParsing;
-import spoon.common.utils.DateUtils;
 import spoon.common.utils.JsonUtils;
 import spoon.config.domain.Config;
 import spoon.game.domain.MenuCode;
@@ -311,10 +310,7 @@ public class WorldPowerService {
     }
 
     private void sendQuery(String param, String betDate, String round, String times, String betType, long price) {
-        String json = HttpParsing.getJson(param);
-        if (json == null) return;
-        WorldResult result = JsonUtils.toModel(json, WorldResult.class);
-        if (result == null) return;
+        log.error(param);
         PolygonBalance b = new PolygonBalance();
         b.setGame("파워볼");
         b.setGameDate(betDate);
@@ -323,6 +319,21 @@ public class WorldPowerService {
         b.setBetType(betType);
         b.setPrice(price);
         b.setRegDate(new Date());
+
+        String json = HttpParsing.getJson(param);
+
+        if (json == null) {
+            b.setMessage("보험 실패 : 500 에러");
+            polygonBalanceRepository.saveAndFlush(b);
+            return;
+        }
+
+        WorldResult result = JsonUtils.toModel(json, WorldResult.class);
+        log.error("-------------------------------------------------------- model not null");
+        if (result == null) return;
+        log.error("-------------------------------------------------------- result not null");
+        log.error("{}", result.toString());
+
         b.setMessage(result.isResult() ? "보험성공 : point " + result.getPoint() : result.getMessage());
         polygonBalanceRepository.saveAndFlush(b);
     }

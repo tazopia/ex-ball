@@ -17,13 +17,12 @@ public class WorldTask {
     /**
      * 파워볼
      */
-    @Scheduled(cron = "22 2/5 * * * ?")
+    @Scheduled(cron = "10 2/5 * * * ?")
     public void powerBalance() {
         if (canBalance()) {
             worldPowerService.balance();
         }
     }
-
 
     private boolean canBalance() {
         return Config.getSiteConfig().getBalance().isEnabled();

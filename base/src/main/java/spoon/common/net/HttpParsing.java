@@ -23,10 +23,10 @@ public class HttpParsing {
                     .execute()
                     .body();
         } catch (HttpStatusException e) {
-            log.warn("에러코드 : {}, 주소 : {}", e.getStatusCode(), url);
+            log.warn("에러코드 : {}, 주소 : {}", e.getStatusCode(), url, e);
             log.warn("{}", ErrorUtils.trace(e.getStackTrace()));
         } catch (IOException e) {
-            log.warn("사이트에 접속할 수 없습니다. - 에러코드: {}, 주소: {}", e.getMessage(), url);
+            log.warn("사이트에 접속할 수 없습니다. - 에러코드: {}, 주소: {}", e.getMessage(), url, e);
             log.warn("{}", ErrorUtils.trace(e.getStackTrace()));
         }
         return null;

@@ -254,7 +254,7 @@
         <li sec:authorize="hasRole('ROLE_GOD')" th:class="${lnb eq 'system'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/system/config|}"><em class="bul fa fa-wrench"></em><span>시스템 설정</span></a></li>
         <li sec:authorize="hasAnyRole('ROLE_GOD', 'ROLE_SUPER')" th:class="${lnb eq 'change'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/system/change|}"><em class="bul fa fa-user-plus"></em><span>마이그레이션</span></a></li>
         <li th:class="${lnb eq 'site'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/config/site|}"><em class="bul fa fa-cog"></em><span>기본 환경 설정</span></a></li>
-<!--        <li th:class="${lnb eq 'game'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/config/game|}"><em class="bul fa fa-cog"></em><span>스포츠 환경 설정</span></a></li>-->
+        <li th:class="${lnb eq 'game'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/config/game|}"><em class="bul fa fa-cog"></em><span>스포츠 환경 설정</span></a></li>
 <!--        <li th:class="${lnb eq 'sports'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/config/sports|}"><em class="bul fa fa-futbol-o"></em><span>종목 설정</span></a></li>-->
 <!--        <li th:class="${lnb eq 'league'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/config/league|}"><em class="bul fa fa-pencil-square-o"></em><span>리그 설정</span></a></li>-->
 <!--        <li th:class="${lnb eq 'team'} ? 'on'"><a th:href="@{|${siteConfig.pathAdmin}/config/team|}"><em class="bul fa fa-trophy"></em><span>팀명 설정</span></a></li>-->
