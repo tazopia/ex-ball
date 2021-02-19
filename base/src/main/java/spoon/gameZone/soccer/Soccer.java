@@ -68,7 +68,7 @@ public class Soccer {
 
     private int scoreAway;
 
-    @Column(length = 12)
+    @Column(length = 14)
     private String sdate;
 
     private boolean closing;

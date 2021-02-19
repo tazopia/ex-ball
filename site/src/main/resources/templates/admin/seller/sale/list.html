@@ -55,6 +55,7 @@
                 <th>정산금</th>
                 <th>지급금</th>
                 <th style="width: 140px;">정산</th>
+				<td>삭제</td>
             </tr>
             </thead>
             <tbody>
@@ -79,7 +80,7 @@
                         <span th:remove="tag" th:case="*" th:text="'-'"></span>
                     </td>
                     <td>
-                        <span th:if="${isHQ}" th:remove="tag" th:utext="${tag.dayWeekTimes(m.regDate)}"></span>
+						<span th:if="${isHQ}" th:remove="tag" th:text="${agency.sdate + ' ~ ' + agency.edate}"></span>
                         <span th:if="${!isHQ}" th:remove="tag" th:text="'-'"></span>
                     </td>
                     <td class="color04 num" th:text="${tag.num(m.lastMoney) + '원'}">정산금</td>
@@ -95,6 +96,12 @@
                         <span class="color02" th:if="${m.closing and isHQ}">지급완료</span>
                         <span th:unless="${isHQ}" th:text="'-'"></span>
                     </td>
+					<td>
+						<span class="color02" th:if="${isHQ}">
+							<a class="btn btn02" th:onclick="|goDelete(${agency.id});|">삭제</a>
+						</span>
+						<span th:unless="${isHQ}" th:text="'-'"></span>
+					</td>
                 </tr>
             </th:block>
             </tbody>
@@ -128,6 +135,20 @@
 
     function toggle(cls) {
         $('.' + cls).toggle();
+    }
+
+    function goDelete(id) {
+        if (!confirm('삭제 하시면 되살릴 수 없습니다.\n\n이미 지급된 정산금은 수동으로 처리 하셔야 합니다.')) {
+            return;
+        }
+
+        $.post(path + '/seller/sale/delete', {
+            id: id
+        }).done(function () {
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
+        });
     }
 
 </script>

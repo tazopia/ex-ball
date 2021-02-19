@@ -32,6 +32,12 @@ public class Sale {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date regDate;
 
+    @Column(length = 32)
+    private String sdate;
+
+    @Column(length = 32)
+    private String edate;
+
     private boolean closing;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})

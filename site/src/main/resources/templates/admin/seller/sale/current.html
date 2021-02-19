@@ -9,6 +9,24 @@
     총판 정산 관리
 </h2>
 <div layout:fragment="content">
+	<section>
+		<div class="panel-search">
+			<form id="frm-search" th:object="${command}" th:action="@{|${siteConfig.pathAdmin}/seller/sale|}" method="get">
+				<label>
+					시작일:
+					<input type="text" class="cal" th:field="*{sdate}"/>
+				</label>
+				<label>
+					마감일:
+					<input type="text" class="cal" th:field="*{edate}"/>
+				</label>
+				<div class="command">
+					<a class="btn btn01" onclick="goSearch();">검색</a>
+					<a th:href="@{|${siteConfig.pathAdmin}/seller/sale|}" class="btn">취소</a>
+				</div>
+			</form>
+		</div>
+	</section>
     <section>
         <div class="panel-header">
             <h3>

@@ -13,12 +13,14 @@ public interface SaleService {
 
     List<SaleItem> currentSale(SaleDto.Command command);
 
-    AjaxResult balanceSale(String userid);
+    AjaxResult balanceSale(SaleDto.Command command);
 
     Page<Sale> getPage(SaleDto.Command command, Pageable pageable);
 
     Page<SaleItem> getPageItem(SaleDto.Command command, Pageable pageable);
 
     AjaxResult payment(SaleDto.Payment payment);
+
+    AjaxResult delete(long id);
 
 }

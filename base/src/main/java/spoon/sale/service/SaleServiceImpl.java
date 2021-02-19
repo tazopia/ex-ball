@@ -52,36 +52,37 @@ public class SaleServiceImpl implements SaleService {
 
     @Transactional
     @Override
-    public AjaxResult balanceSale(String userid) {
-        User user = memberService.getUser(userid);
-        SaleDto.Command command = new SaleDto.Command();
-        command.setAgency2(userid);
+    public AjaxResult balanceSale(SaleDto.Command command) {
+        User user = memberService.getUser(command.getUserid());
+        command.setAgency2(command.getUserid());
         List<SaleItem> saleItems = shareMapper.currentSale(command);
         Sale sale = new Sale();
+        sale.setSdate(command.getSdate());
+        sale.setEdate(command.getEdate());
 
         try {
             for (SaleItem item : saleItems) {
                 item.setLastMoney(item.getCalcMoney());
-                item.setRegDate(new Date());
+                item.setRegDate(command.getEnd());
             }
 
-            sale.setUserid(userid);
+            sale.setUserid(command.getUserid());
             sale.setAgency1(user.getAgency1());
             sale.setAgency2(user.getAgency2());
             sale.setRole(user.getRole());
-            sale.setRegDate(new Date());
+            sale.setRegDate(command.getEnd());
             sale.setSaleItems(saleItems);
 
             saleRepository.saveAndFlush(sale);
 
         } catch (RuntimeException e) {
-            log.error("{} - 총판 정산에 실패하였습니다.: {}", e.getMessage(), userid);
+            log.error("{} - 총판 정산에 실패하였습니다.: {}", e.getMessage(), command.getUserid());
             log.info("{}", ErrorUtils.trace(e.getStackTrace()));
             TransactionInterceptor.currentTransactionStatus().setRollbackOnly();
-            return new AjaxResult(false, userid + " 총판 정산에 실패 하였습니다.");
+            return new AjaxResult(false, command.getUserid() + " 총판 정산에 실패 하였습니다.");
         }
 
-        return new AjaxResult(true, userid + " 총판 정산을 완료하였습니다.");
+        return new AjaxResult(true, command.getUserid() + " 총판 정산을 완료하였습니다.");
     }
 
     @Override
@@ -124,5 +125,12 @@ public class SaleServiceImpl implements SaleService {
         }
 
         return new AjaxResult(true, "총판 정산금 지급을 완료 하였습니다.");
+    }
+
+    @Transactional
+    @Override
+    public AjaxResult delete(long id) {
+        saleRepository.delete(id);
+        return new AjaxResult(true, "총판 정산금 내역을 삭제하였습니다.");
     }
 }

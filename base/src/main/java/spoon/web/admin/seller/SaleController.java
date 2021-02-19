@@ -29,8 +29,8 @@ public class SaleController {
      * 총판 현재 정산금 페이지
      */
     @RequestMapping(value = "/seller/sale", method = RequestMethod.GET)
-    public String sale(ModelMap map) {
-        map.addAttribute("list", saleService.currentSale(new SaleDto.Command()));
+    public String sale(ModelMap map, SaleDto.Command command) {
+        map.addAttribute("list", saleService.currentSale(command));
         return "/admin/seller/sale/current";
     }
 
@@ -39,8 +39,8 @@ public class SaleController {
      */
     @ResponseBody
     @RequestMapping(value = "/seller/sale", method = RequestMethod.POST)
-    public AjaxResult sale(String userid) {
-        return saleService.balanceSale(userid);
+    public AjaxResult sale(SaleDto.Command command) {
+        return saleService.balanceSale(command);
     }
 
     /**
@@ -62,6 +62,12 @@ public class SaleController {
     @RequestMapping(value = "/seller/sale/payment", method = RequestMethod.POST)
     public AjaxResult payment(SaleDto.Payment payment) {
         return saleService.payment(payment);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/seller/sale/delete", method = RequestMethod.POST)
+    public AjaxResult delete(long id) {
+        return saleService.delete(id);
     }
 
 }

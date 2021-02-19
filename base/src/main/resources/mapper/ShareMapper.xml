@@ -62,24 +62,24 @@
                 (SELECT count(*) FROM MEMBER WHERE agency2 = c.agency2 AND role = 'USER' AND enabled = 1 AND secession = 0)
             END) as users,
             (CASE WHEN c.role = 'AGENCY1' THEN
-                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.regDate AND agency1 = c.agency1 AND bankingCode = 'IN' AND closing = 1 AND cancel = 0)
+                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.sdate AND regDate &lt;= c.edate AND agency1 = c.agency1 AND bankingCode = 'IN' AND closing = 1 AND cancel = 0)
                 WHEN c.role = 'AGENCY2' THEN
-                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.regDate AND agency2 = c.agency2 AND bankingCode = 'IN' AND closing = 1 AND cancel = 0)
+                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.sdate AND regDate &lt;= c.edate AND agency2 = c.agency2 AND bankingCode = 'IN' AND closing = 1 AND cancel = 0)
             END) as inMoney,
             (CASE WHEN c.role = 'AGENCY1' THEN
-                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.regDate AND agency1 = c.agency1 AND bankingCode = 'OUT' AND closing = 1 AND cancel = 0)
+                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.sdate AND regDate &lt;= c.edate AND agency1 = c.agency1 AND bankingCode = 'OUT' AND closing = 1 AND cancel = 0)
                 WHEN c.role = 'AGENCY2' THEN
-                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.regDate AND agency2 = c.agency2 AND bankingCode = 'OUT' AND closing = 1 AND cancel = 0)
+                (SELECT ISNULL(SUM(amount), 0) FROM BANKING WHERE regDate &gt; c.sdate AND regDate &lt;= c.edate AND agency2 = c.agency2 AND bankingCode = 'OUT' AND closing = 1 AND cancel = 0)
             END) as outMoney,
             (CASE WHEN c.role = 'AGENCY1' THEN
-                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.regDate AND agency1 = c.agency1 AND menuCode IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
+                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.sdate AND startDate &lt;= c.edate AND agency1 = c.agency1 AND menuCode IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
                 WHEN c.role = 'AGENCY2' THEN
-                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.regDate AND agency2 = c.agency2 AND menuCode IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
+                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.sdate AND startDate &lt;= c.edate AND agency2 = c.agency2 AND menuCode IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
             END) as betSports,
             (CASE WHEN c.role = 'AGENCY1' THEN
-                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.regDate AND agency1 = c.agency1 AND menuCode NOT IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
+                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.sdate AND startDate &lt;= c.edate AND agency1 = c.agency1 AND menuCode NOT IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
                 WHEN c.role = 'AGENCY2' THEN
-                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.regDate AND agency2 = c.agency2 AND menuCode NOT IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
+                (SELECT ISNULL(SUM(betMoney), 0) FROM BET WHERE startDate &gt; c.sdate AND startDate &lt;= c.edate AND agency2 = c.agency2 AND menuCode NOT IN ('CROSS', 'MATCH', 'HANDICAP', 'SPECIAL', 'LIVE') AND role = 'USER' AND cancel = 0)
             END) as betZone,
             c.userid, c.agency2, c.agency1, c.role, c.rateCode, c.rateShare, c.rateSports, c.rateZone, c.regDate,
             c.lastMoney, c.totalMoney
@@ -87,7 +87,8 @@
         (
             SELECT
                 a.userid, a.agency2, a.agency1, a.role, a.rateCode, a.rateShare, a.rateSports, a.rateZone,
-                ISNULL(b.regDate, a.joinDate) as regDate, b.lastMoney, b.totalMoney
+                ISNULL(b.regDate, a.joinDate) as regDate, b.lastMoney, b.totalMoney,
+                #{command.end, jdbcType=DATE} as edate, #{command.start, jdbcType=DATE} as sdate
             FROM MEMBER a LEFT OUTER JOIN SALE_ITEM b
             ON a.userid = b.userid AND b.id = (SELECT MAX(id) FROM SALE_ITEM WHERE userid = a.userid)
             WHERE a.role IN ('AGENCY1', 'AGENCY2') AND a.enabled = 1 AND a.secession = 0

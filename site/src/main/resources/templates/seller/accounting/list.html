@@ -58,7 +58,7 @@
                         <span th:remove="tag" th:case="*" th:text="'-'"></span>
                     </td>
                     <td>
-                        <span th:if="${isHQ}" th:remove="tag" th:utext="${tag.dayWeekTimes(m.regDate)}"></span>
+						<span th:if="${isHQ}" th:remove="tag" th:text="${agency.sdate + ' ~ ' + agency.edate}"></span>
                         <span th:if="${!isHQ}" th:remove="tag" th:text="'-'"></span>
                     </td>
                     <td class="color04 num" th:text="${tag.num(m.lastMoney) + '원'}">정산금</td>
